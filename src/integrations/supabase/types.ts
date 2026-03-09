@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      articles: {
+        Row: {
+          author: string
+          content: string | null
+          created_at: string
+          created_by: string | null
+          description: string
+          display_order: number
+          icon: string
+          id: string
+          image_url: string | null
+          published_at: string
+          tag: string
+          title: string
+        }
+        Insert: {
+          author?: string
+          content?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          display_order?: number
+          icon?: string
+          id?: string
+          image_url?: string | null
+          published_at?: string
+          tag?: string
+          title: string
+        }
+        Update: {
+          author?: string
+          content?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          display_order?: number
+          icon?: string
+          id?: string
+          image_url?: string | null
+          published_at?: string
+          tag?: string
+          title?: string
+        }
+        Relationships: []
+      }
       chat_conversations: {
         Row: {
           created_at: string
