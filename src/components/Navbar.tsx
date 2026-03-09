@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Noticias", href: "/#noticias" },
   { label: "Programación", href: "/#programacion" },
   { label: "Artículos", href: "/#articulos" },
-  { label: "Ganader\u0049\u00419\u0041", href: "/asistente-ia" },
+  { label: "GanaderIA_NAV", href: "/asistente-ia" },
 ];
 
 const Navbar = () => {
@@ -63,6 +63,16 @@ const Navbar = () => {
                 <span className="flex items-center gap-1.5">
                   <span className="h-2 w-2 rounded-full bg-destructive animate-pulse-live" />
                   {link.label}
+                </span>
+              ) : link.label === "GanaderIA_NAV" ? (
+                <span className="flex flex-col items-center leading-none gap-0.5">
+                  <span className="flex items-center gap-1">
+                    <Bot className="h-3.5 w-3.5 text-primary" />
+                    <span className="font-display font-extrabold text-primary tracking-tight normal-case">
+                      Ganader<span className="text-accent">IA</span>
+                    </span>
+                  </span>
+                  <span className="text-[9px] text-muted-foreground font-medium tracking-wider uppercase">Asistente IA</span>
                 </span>
               ) : (
                 link.label
@@ -179,8 +189,20 @@ const Navbar = () => {
                   {link.label === "EN VIVO" && (
                     <span className="h-2 w-2 rounded-full bg-destructive animate-pulse-live" />
                   )}
-                  {link.label}
-                  {link.href === "/asistente-ia" && <Bot className="h-4 w-4 text-primary" />}
+                  {link.label === "GanaderIA_NAV" ? (
+                    <span className="flex items-center gap-2">
+                      <Bot className="h-4 w-4 text-primary" />
+                      <span className="flex flex-col leading-none">
+                        <span className="font-display font-extrabold text-primary normal-case">
+                          Ganader<span className="text-accent">IA</span>
+                        </span>
+                        <span className="text-[9px] text-muted-foreground font-medium tracking-wider uppercase">Asistente IA</span>
+                      </span>
+                    </span>
+                  ) : (
+                    link.label
+                  )}
+                  
                 </a>
               ))}
               {/* Mobile auth */}
