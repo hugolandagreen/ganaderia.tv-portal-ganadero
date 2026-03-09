@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { PRO_PRICE_ID } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import ganaderiaIcon from "@/assets/ganaderia-icon.png";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 type Message = { role: "user" | "assistant"; content: string };
