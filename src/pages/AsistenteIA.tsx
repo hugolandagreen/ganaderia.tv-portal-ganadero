@@ -503,7 +503,7 @@ const AsistenteIA = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <Crown className="h-5 w-5 text-primary" />
-                          <h3 className="font-bold text-foreground">Asistente Ganadero Pro</h3>
+                          <h3 className="font-bold text-foreground">GanaderIA Pro</h3>
                           <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-bold">$9.99/mes</span>
                         </div>
                         <p className="text-sm text-muted-foreground mb-3">
