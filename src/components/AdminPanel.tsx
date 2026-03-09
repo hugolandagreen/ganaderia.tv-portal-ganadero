@@ -17,7 +17,10 @@ const AdminPanel = () => {
 
   const menuItems = [
     ...(isAdmin
-      ? [{ label: "Usuarios", icon: Users, path: "/admin/usuarios", description: "Gestionar roles y usuarios" }]
+      ? [
+          { label: "Usuarios", icon: Users, path: "/admin/usuarios", description: "Gestionar roles y usuarios" },
+          { label: "Anuncios", icon: Megaphone, path: "/admin/sponsors", description: "Gestionar patrocinadores" },
+        ]
       : []),
     ...(isNewsEditor || isCorrespondent
       ? [
