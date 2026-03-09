@@ -419,9 +419,10 @@ const AsistenteIA = () => {
         <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
           <div className="border-b border-border bg-card px-4 py-3 flex items-center gap-3">
-            <Bot className="h-6 w-6 text-primary" />
+            <img src={ganaderiaIcon} alt="GanaderIA" className="h-8 w-8" />
             <div className="flex-1">
-              <h1 className="text-lg font-bold text-foreground">GanaderIA</h1>
+              <h1 className="text-lg font-display font-extrabold text-foreground leading-none">Ganader<span className="text-primary">IA</span></h1>
+              <p className="text-[10px] text-muted-foreground font-medium tracking-wider uppercase">Asistente Ganadero con IA</p>
               <p className="text-xs text-muted-foreground">
                 {isPro
                   ? "Consultas ilimitadas • Asesoría personalizada"
