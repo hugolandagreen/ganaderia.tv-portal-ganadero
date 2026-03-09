@@ -108,6 +108,22 @@ const AdBanner = ({ placement, variant = "banner", className = "" }: AdBannerPro
                 />
               </a>
             )}
+
+            {variant === "sponsor_square" && (
+              <a
+                href={formatUrl(sponsor.link_url)}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="block relative overflow-hidden rounded-xl group hover:shadow-lg transition-all"
+              >
+                <img
+                  src={sponsor.image_url}
+                  alt={sponsor.name}
+                  className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500 rounded-xl"
+                  loading="lazy"
+                />
+              </a>
+            )}
           </motion.div>
         ))}
       </div>
