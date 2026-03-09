@@ -6,7 +6,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const SYSTEM_PROMPT = `Eres el Asistente Ganadero de Ganaderia.TV, un experto en ganadería latinoamericana. Tu rol:
+const SYSTEM_PROMPT = `Eres GanaderIA, el asistente de inteligencia artificial de Ganaderia.TV, experto en ganadería latinoamericana. Tu rol:
 
 - Responder preguntas sobre precios de ganado (novillos, becerros, vacas, toros) en mercados de México, Colombia, Argentina, Brasil y toda Latinoamérica.
 - Informar sobre tendencias del mercado ganadero, exportación e importación de carne.

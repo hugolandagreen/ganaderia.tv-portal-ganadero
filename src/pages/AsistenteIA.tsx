@@ -187,7 +187,7 @@ const AsistenteIA = () => {
   const hasScrolled = useRef(false);
 
   useEffect(() => {
-    document.title = "Asistente IA | Ganaderia.TV";
+    document.title = "GanaderIA – Asistente Ganadero con IA | Ganaderia.TV";
     return () => { document.title = "Ganaderia.TV"; };
   }, []);
 
@@ -420,7 +420,7 @@ const AsistenteIA = () => {
           <div className="border-b border-border bg-card px-4 py-3 flex items-center gap-3">
             <Bot className="h-6 w-6 text-primary" />
             <div className="flex-1">
-              <h1 className="text-lg font-bold text-foreground">Asistente Ganadero IA</h1>
+              <h1 className="text-lg font-bold text-foreground">GanaderIA</h1>
               <p className="text-xs text-muted-foreground">
                 {isPro
                   ? "Consultas ilimitadas • Asesoría personalizada"
@@ -454,8 +454,8 @@ const AsistenteIA = () => {
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
                     <Sparkles className="h-8 w-8 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground mb-2">
-                    ¿En qué te puedo ayudar hoy?
+                   <h2 className="text-2xl font-bold text-foreground mb-2">
+                    Bienvenido a <span className="text-primary">GanaderIA</span>
                   </h2>
                   <p className="text-muted-foreground max-w-md mx-auto">
                     Soy tu asistente ganadero con inteligencia artificial. Pregúntame sobre precios, razas, nutrición, salud animal y más.
@@ -503,11 +503,11 @@ const AsistenteIA = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <Crown className="h-5 w-5 text-primary" />
-                          <h3 className="font-bold text-foreground">Asistente Ganadero Pro</h3>
+                          <h3 className="font-bold text-foreground">GanaderIA Pro</h3>
                           <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-bold">$9.99/mes</span>
                         </div>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Asesoría personalizada con IA para llevar tu ganadería al siguiente nivel
+                          Desbloquea todo el poder de GanaderIA para llevar tu ganadería al siguiente nivel
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                           {proFeatures.slice(0, 4).map((f, i) => (
