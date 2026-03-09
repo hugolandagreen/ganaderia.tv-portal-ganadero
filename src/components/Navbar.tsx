@@ -189,8 +189,20 @@ const Navbar = () => {
                   {link.label === "EN VIVO" && (
                     <span className="h-2 w-2 rounded-full bg-destructive animate-pulse-live" />
                   )}
-                  {link.label}
-                  {link.href === "/asistente-ia" && <Bot className="h-4 w-4 text-primary" />}
+                  {link.label === "GanaderIA_NAV" ? (
+                    <span className="flex items-center gap-2">
+                      <Bot className="h-4 w-4 text-primary" />
+                      <span className="flex flex-col leading-none">
+                        <span className="font-display font-extrabold text-primary normal-case">
+                          Ganader<span className="text-accent">IA</span>
+                        </span>
+                        <span className="text-[9px] text-muted-foreground font-medium tracking-wider uppercase">Asistente IA</span>
+                      </span>
+                    </span>
+                  ) : (
+                    link.label
+                  )}
+                  
                 </a>
               ))}
               {/* Mobile auth */}
