@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
 import ReaderCount from "@/components/ReaderCount";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const categoryIcons: Record<Category, React.ReactNode> = {
