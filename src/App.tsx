@@ -26,6 +26,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <Navbar />
             <AdminPanel />
             <Routes>
               <Route path="/" element={<Index />} />
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <RadioPlayer />
           </BrowserRouter>
         </MediaProvider>
       </AuthProvider>
