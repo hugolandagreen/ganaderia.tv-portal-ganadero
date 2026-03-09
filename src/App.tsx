@@ -31,6 +31,7 @@ const App = () => (
               <Route path="/noticia/:id" element={<NoticiaDetalle />} />
               <Route path="/asistente-ia" element={<AsistenteIA />} />
               <Route path="/admin/noticias" element={<AdminNoticias />} />
+              <Route path="/admin/usuarios" element={<AdminUsuarios />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="*" element={<NotFound />} />
