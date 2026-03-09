@@ -116,6 +116,15 @@ serve(async (req) => {
       const { userId } = params;
       if (!userId) throw new Error("userId required");
       if (userId === callerUid) throw new Error("No puedes eliminarte a ti mismo");
+      // Check if target is super_admin - only super_admin can delete them
+      const { data: targetRoles } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId);
+      const targetIsSuperAdmin = (targetRoles || []).some((r: any) => r.role === "super_admin");
+      if (targetIsSuperAdmin && !isSuperAdmin) {
+        throw new Error("No puedes eliminar a un super administrador");
+      }
       const { error } = await supabase.auth.admin.deleteUser(userId);
       if (error) throw new Error(error.message);
       return new Response(JSON.stringify({ success: true }), {

@@ -16,12 +16,13 @@ type UserProfile = {
 };
 
 const ROLE_LABELS: Record<string, { label: string; icon: typeof Shield; color: string }> = {
+  super_admin: { label: "Super Admin", icon: Crown, color: "bg-yellow-600 text-white" },
   admin: { label: "Administrador", icon: Shield, color: "bg-destructive text-destructive-foreground" },
   news_editor: { label: "Editor de Noticias", icon: Newspaper, color: "bg-primary text-primary-foreground" },
   correspondent: { label: "Corresponsal", icon: Globe, color: "bg-accent text-accent-foreground" },
 };
 
-const ALL_ROLES = ["admin", "news_editor", "correspondent"] as const;
+const ALL_ROLES = ["super_admin", "admin", "news_editor", "correspondent"] as const;
 
 const AdminUsuarios = () => {
   const { user } = useAuth();
