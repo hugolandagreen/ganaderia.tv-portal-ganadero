@@ -12,7 +12,7 @@ const navLinks = [
   { label: "EN VIVO", href: "/#en-vivo" },
   { label: "Noticias", href: "/#noticias" },
   { label: "Programación", href: "/#programacion" },
-  { label: "Artículos", href: "/#articulos" },
+  { label: "Blog", href: "/articulos" },
   { label: "GanaderIA_NAV", href: "/asistente-ia" },
 ];
 
