@@ -119,7 +119,7 @@ const Noticias = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
             <AnimatePresence mode="popLayout">
               {filtered.map((news, i) => {
-                const badge = categoryBadge[news.category as Category] || categoryBadge.lecheroo;
+                const badge = categoryBadge[news.category as Category] || categoryBadge.lechero;
                 return (
                   <motion.article
                     key={news.id}
