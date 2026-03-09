@@ -31,8 +31,7 @@ const NoticiaDetalle = () => {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-background">
-        <Navbar />
+      <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
         <div className="pt-28 pb-20 flex items-center justify-center">
           <div className="animate-pulse text-muted-foreground">Cargando...</div>
         </div>
