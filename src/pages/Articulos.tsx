@@ -6,8 +6,10 @@ import { useArticles } from "@/hooks/useArticles";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import ReaderCount from "@/components/ReaderCount";
+import { useLang } from "@/contexts/LangContext";
 
 const Articulos = () => {
+  const { lang, t } = useLang();
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [activeYear, setActiveYear] = useState<string | null>(null);
   const [search, setSearch] = useState("");
@@ -35,18 +37,18 @@ const Articulos = () => {
         <div className="absolute top-10 right-20 w-80 h-80 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10">
           <Link to="/" className="inline-flex items-center gap-2 text-primary font-semibold mb-6 hover:gap-3 transition-all">
-            <ArrowLeft className="h-4 w-4" /> Volver al inicio
+            <ArrowLeft className="h-4 w-4" /> {t("common_back_home")}
           </Link>
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2.5 rounded-xl bg-primary/10">
               <BookOpen className="h-6 w-6 text-primary" />
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground">
-              Blog <span className="text-gradient-gold">Ganadero</span>
+              {t("articles_blog_title")} <span className="text-gradient-gold">{t("articles_blog_highlight")}</span>
             </h1>
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Artículos especializados sobre genética, mercados, sostenibilidad y más
+            {t("articles_blog_subtitle")}
           </p>
         </div>
       </section>
@@ -60,7 +62,7 @@ const Articulos = () => {
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar artículos..."
+              placeholder={t("articles_search")}
               className="pl-10"
             />
           </div>
@@ -105,7 +107,7 @@ const Articulos = () => {
           )}
 
           <p className="text-sm text-muted-foreground mb-6">
-            Mostrando <span className="font-bold text-foreground">{filtered.length}</span> artículos
+            {t("news_showing")} <span className="font-bold text-foreground">{filtered.length}</span> {t("articles_showing")}
           </p>
 
           {/* Articles grid */}
@@ -158,9 +160,9 @@ const Articulos = () => {
                         <div className="p-5">
                           <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
                             <div className="flex items-center gap-2">
-                              <span>{date.toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" })}</span>
+                              <span>{date.toLocaleDateString(lang === "pt" ? "pt-BR" : "es-MX", { day: "numeric", month: "short", year: "numeric" })}</span>
                               <span>·</span>
-                              <span>{readTime} min</span>
+                              <span>{readTime} {t("articles_min")}</span>
                             </div>
                             <ReaderCount id={article.id} publishedAt={article.published_at} />
                           </div>
@@ -173,7 +175,7 @@ const Articulos = () => {
                           <div className="flex items-center justify-between">
                             <span className="text-xs text-muted-foreground">{article.author}</span>
                             <span className="flex items-center gap-1.5 text-sm font-bold text-primary group-hover:gap-3 transition-all">
-                              Leer <ArrowRight className="h-3.5 w-3.5" />
+                              {t("articles_read")} <ArrowRight className="h-3.5 w-3.5" />
                             </span>
                           </div>
                         </div>
@@ -192,8 +194,8 @@ const Articulos = () => {
               className="text-center py-16 text-muted-foreground"
             >
               <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-40" />
-              <p className="text-lg font-semibold">No hay artículos para estos filtros</p>
-              <p className="text-sm">Prueba con otra combinación</p>
+              <p className="text-lg font-semibold">{t("articles_no_results")}</p>
+              <p className="text-sm">{t("articles_try_another")}</p>
             </motion.div>
           )}
         </div>
