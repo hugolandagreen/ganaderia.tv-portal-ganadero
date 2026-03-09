@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
+import ReaderCount from "@/components/ReaderCount";
 
 const categoryIcons: Record<Category, React.ReactNode> = {
   lechero: <Milk className="h-5 w-5" />,
