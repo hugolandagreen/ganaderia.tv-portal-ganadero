@@ -549,7 +549,7 @@ const AsistenteIA = () => {
                         : "bg-muted text-foreground"
                     }`}>
                       {msg.role === "assistant" && (
-                        <Bot className="h-4 w-4 mb-1 text-primary inline-block mr-1.5" />
+                        <img src={ganaderiaIcon} alt="GanaderIA" className="h-4 w-4 mb-1 inline-block mr-1.5" />
                       )}
                       {msg.content}
                     </div>
