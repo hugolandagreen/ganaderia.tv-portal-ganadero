@@ -27,7 +27,6 @@ const Index = () => {
       <NewsSection />
       <ProgrammingSection />
       <ArticlesSection />
-      <ProSection />
       <Footer />
       <RadioPlayer />
     </main>

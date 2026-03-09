@@ -4,6 +4,7 @@ import { Bot, Send, Loader2, Crown, Lock, Plus, MessageSquare, Trash2, Sparkles,
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { PRO_PRICE_ID } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import RadioPlayer from "@/components/RadioPlayer";
