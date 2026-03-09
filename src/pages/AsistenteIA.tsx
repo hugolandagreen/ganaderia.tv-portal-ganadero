@@ -602,7 +602,6 @@ const AsistenteIA = () => {
           </div>
         </div>
       </div>
-      <RadioPlayer />
     </main>
   );
 };
