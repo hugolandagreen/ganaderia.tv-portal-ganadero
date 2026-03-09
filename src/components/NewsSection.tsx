@@ -189,8 +189,8 @@ const NewsSection = () => {
             className="text-center py-16 text-muted-foreground"
           >
             <Newspaper className="h-12 w-12 mx-auto mb-3 opacity-40" />
-            <p className="text-lg font-semibold">No hay noticias para estos filtros</p>
-            <p className="text-sm">Prueba con otra combinación de país o categoría</p>
+            <p className="text-lg font-semibold">{t("news_no_results")}</p>
+            <p className="text-sm">{t("news_try_another")}</p>
           </motion.div>
         )}
 
