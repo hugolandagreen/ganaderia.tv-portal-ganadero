@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import Navbar from "@/components/Navbar";
 import { Shield, Trash2, UserPlus, UserMinus, Users, Crown, Newspaper, Globe, Loader2 } from "lucide-react";
 
 type UserProfile = {
@@ -93,9 +92,8 @@ const AdminUsuarios = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <div className="pt-20 flex items-center justify-center h-[60vh]">
+      <div className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
+        <div className="pt-6 flex items-center justify-center h-[60vh]">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </div>
@@ -105,9 +103,8 @@ const AdminUsuarios = () => {
   if (!isAdmin) return null;
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <div className="pt-20 pb-10 container mx-auto px-4">
+    <div className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
+      <div className="pt-6 pb-10 container mx-auto px-4">
         <div className="flex items-center gap-3 mb-8">
           <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
             <Users className="h-6 w-6 text-primary" />

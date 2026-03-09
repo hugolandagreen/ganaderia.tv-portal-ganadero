@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Milk, Beef, ArrowRight, ArrowLeft, Newspaper, Loader2, Target } from "lucide-react";
 import { Link } from "react-router-dom";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
@@ -29,11 +28,10 @@ const Noticias = () => {
   });
 
   return (
-    <main className="min-h-screen bg-background">
-      <Navbar />
+    <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
 
       {/* Hero header */}
-      <section className="pt-28 pb-12 bg-gradient-to-b from-primary/10 via-secondary/20 to-background relative overflow-hidden">
+      <section className="pt-8 pb-12 bg-gradient-to-b from-primary/10 via-secondary/20 to-background relative overflow-hidden">
         <div className="absolute top-10 right-20 w-80 h-80 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10">
           <Link to="/" className="inline-flex items-center gap-2 text-primary font-semibold mb-6 hover:gap-3 transition-all">

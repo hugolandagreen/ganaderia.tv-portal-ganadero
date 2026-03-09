@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, User, Globe, Clock, Share2 } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { categoryBadge, type Category } from "@/data/news";
@@ -32,8 +31,7 @@ const NoticiaDetalle = () => {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-background">
-        <Navbar />
+      <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
         <div className="pt-28 pb-20 flex items-center justify-center">
           <div className="animate-pulse text-muted-foreground">Cargando...</div>
         </div>
@@ -44,8 +42,7 @@ const NoticiaDetalle = () => {
 
   if (error || !news) {
     return (
-      <main className="min-h-screen bg-background">
-        <Navbar />
+      <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
         <div className="pt-28 pb-20 text-center">
           <h1 className="text-2xl font-bold text-foreground mb-4">Noticia no encontrada</h1>
           <Link to="/noticias" className="text-primary hover:underline">
@@ -74,8 +71,7 @@ const NoticiaDetalle = () => {
   };
 
   return (
-    <main className="min-h-screen bg-background">
-      <Navbar />
+    <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
 
       {/* Hero Image */}
       <section className="relative pt-20">

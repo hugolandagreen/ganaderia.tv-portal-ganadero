@@ -6,8 +6,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { PRO_PRICE_ID } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import Navbar from "@/components/Navbar";
-import RadioPlayer from "@/components/RadioPlayer";
 import ganaderiaIcon from "@/assets/ganaderia-icon.png";
 
 type Message = { role: "user" | "assistant"; content: string };
@@ -338,9 +336,8 @@ const AsistenteIA = () => {
   const showWelcome = messages.length === 0;
 
   return (
-    <main className="min-h-screen bg-background pb-14 lg:pb-0">
-      <Navbar />
-      <div className="pt-14 sm:pt-16 lg:pt-20 flex h-[calc(100vh-0px)] lg:h-[calc(100vh-0px)]">
+    <main className="min-h-screen bg-background pb-14 lg:pb-0 pt-14 sm:pt-16 lg:pt-20">
+      <div className="flex h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)]">
         {/* Sidebar - conversations */}
         {user && (
           <aside className={`${showSidebar ? "w-72" : "w-0"} hidden md:block bg-card border-r border-border transition-all overflow-hidden flex-shrink-0`}>
@@ -605,7 +602,6 @@ const AsistenteIA = () => {
           </div>
         </div>
       </div>
-      <RadioPlayer />
     </main>
   );
 };

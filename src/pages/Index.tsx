@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Navbar from "@/components/Navbar";
 import HeroLive from "@/components/HeroLive";
-
 import NewsSection from "@/components/NewsSection";
 import ProgrammingSection from "@/components/ProgrammingSection";
 import ArticlesSection from "@/components/ArticlesSection";
 import Footer from "@/components/Footer";
-import RadioPlayer from "@/components/RadioPlayer";
 
 const Index = () => {
   const location = useLocation();
@@ -21,14 +18,12 @@ const Index = () => {
     }
   }, [location.hash]);
   return (
-    <main className="min-h-screen bg-background pb-14 lg:pb-0">
-      <Navbar />
+    <main className="min-h-screen bg-background pb-14 lg:pb-0 pt-14 sm:pt-16 lg:pt-20">
       <HeroLive />
       <NewsSection />
       <ProgrammingSection />
       <ArticlesSection />
       <Footer />
-      <RadioPlayer />
     </main>
   );
 };

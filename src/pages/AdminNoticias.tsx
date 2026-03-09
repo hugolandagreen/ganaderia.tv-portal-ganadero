@@ -5,7 +5,6 @@ import { useNews, useCreateNews } from "@/hooks/useNews";
 import type { NewsRow } from "@/hooks/useNews";
 import { countries } from "@/data/news";
 import { supabase } from "@/integrations/supabase/client";
-import Navbar from "@/components/Navbar";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -125,10 +124,9 @@ const AdminNoticias = () => {
   if (authLoading) return null;
 
   return (
-    <main className="min-h-screen bg-background">
-      <Navbar />
+    <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
 
-      <section className="pt-28 pb-12 bg-gradient-to-b from-primary/10 via-secondary/20 to-background">
+      <section className="pt-8 pb-12 bg-gradient-to-b from-primary/10 via-secondary/20 to-background">
         <div className="container mx-auto px-4">
           <Link to="/" className="inline-flex items-center gap-2 text-primary font-semibold mb-6 hover:gap-3 transition-all">
             <ArrowLeft className="h-4 w-4" /> Volver al inicio
