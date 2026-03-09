@@ -218,8 +218,8 @@ const AdminNoticias = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="content">Contenido completo</Label>
-                  <Textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} placeholder="Escribe el artículo completo..." rows={10} />
+                  <Label>Contenido completo</Label>
+                  <RichTextEditor content={content} onChange={setContent} />
                 </div>
 
                 <Button type="submit" className="w-full" disabled={createNews.isPending || uploading}>
