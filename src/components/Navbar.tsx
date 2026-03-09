@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Noticias", href: "/#noticias" },
   { label: "Programación", href: "/#programacion" },
   { label: "Artículos", href: "/#articulos" },
-  { label: "GanaderIA"IA", href: "/asistente-ia" },
+  { label: "Ganader\u0049\u0041", href: "/asistente-ia" },
 ];
 
 const Navbar = () => {
