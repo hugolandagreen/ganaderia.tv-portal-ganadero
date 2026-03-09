@@ -92,9 +92,8 @@ const AdminUsuarios = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <div className="pt-20 flex items-center justify-center h-[60vh]">
+      <div className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
+        <div className="pt-6 flex items-center justify-center h-[60vh]">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </div>
