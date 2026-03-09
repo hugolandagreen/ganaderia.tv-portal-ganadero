@@ -18,14 +18,12 @@ const Index = () => {
     }
   }, [location.hash]);
   return (
-    <main className="min-h-screen bg-background pb-14 lg:pb-0">
-      <Navbar />
+    <main className="min-h-screen bg-background pb-14 lg:pb-0 pt-14 sm:pt-16 lg:pt-20">
       <HeroLive />
       <NewsSection />
       <ProgrammingSection />
       <ArticlesSection />
       <Footer />
-      <RadioPlayer />
     </main>
   );
 };
