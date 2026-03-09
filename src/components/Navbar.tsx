@@ -47,7 +47,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
         {/* Logo */}
         <a href="/" onClick={(e) => handleNavClick(e, "/#en-vivo")} className="flex items-center shrink-0 pl-4 sm:pl-6 lg:pl-8">
-          <img src={logo} alt="Ganaderia.TV" className="h-10 sm:h-12 lg:h-[4.5rem] w-auto object-contain" />
+          <img src={logo} alt="Ganaderia.TV" className="h-[2.875rem] sm:h-[3.45rem] lg:h-[5.175rem] w-auto object-contain" />
         </a>
 
         {/* Desktop nav links */}
