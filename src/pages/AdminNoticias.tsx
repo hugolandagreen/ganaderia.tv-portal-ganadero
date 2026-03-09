@@ -20,6 +20,8 @@ const categories = [
   { value: "carne", label: "Ganado de Carne" },
 ];
 
+const ADMIN_EMAIL = "landaverde.pagos@gmail.com";
+
 const AdminNoticias = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -33,9 +35,12 @@ const AdminNoticias = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [summary, setSummary] = useState("");
 
+  const isAdmin = user?.email === ADMIN_EMAIL;
+
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
-  }, [user, authLoading, navigate]);
+    if (!authLoading && user && !isAdmin) navigate("/");
+  }, [user, authLoading, navigate, isAdmin]);
 
   const selectedCountry = countries.find((c) => c.name === country);
 
