@@ -7,6 +7,7 @@ import { MediaProvider } from "@/hooks/useRadioPlayer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import Noticias from "./pages/Noticias";
+import NoticiaDetalle from "./pages/NoticiaDetalle";
 import AdminNoticias from "./pages/AdminNoticias";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
