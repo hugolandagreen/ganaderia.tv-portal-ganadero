@@ -82,57 +82,64 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Radio player (desktop) */}
-        <div className="hidden lg:flex items-center gap-2 h-20 bg-gradient-to-r from-[hsl(348_55%_28%)] via-[hsl(348_50%_32%)] to-[hsl(348_55%_28%)] px-4 shrink-0 border-2 border-accent">
-          <button
-            onClick={togglePlay}
-            className="h-8 w-8 rounded-full bg-accent flex items-center justify-center hover:bg-[hsl(var(--gold-light))] transition-all duration-300 shadow-md glow-gold shrink-0"
-          >
-            {isPlaying ? (
-              <Square className="h-3.5 w-3.5 text-accent-foreground" />
-            ) : (
-              <Play className="h-3.5 w-3.5 text-accent-foreground ml-0.5" />
-            )}
-          </button>
+        {/* Radio player (desktop) — integrated pill */}
+        <div className="hidden lg:flex items-center gap-1.5 shrink-0 mr-1">
+          <div className={`flex items-center gap-2 rounded-full pl-1 pr-3 py-1 transition-all duration-500 ${isPlaying ? "bg-primary/10 border border-primary/20" : "bg-muted/60 border border-transparent hover:border-border"}`}>
+            <button
+              onClick={togglePlay}
+              className={`h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm shrink-0 ${isPlaying ? "bg-accent glow-gold hover:bg-[hsl(var(--gold-light))]" : "bg-primary hover:bg-primary/90"}`}
+            >
+              {isPlaying ? (
+                <Square className="h-3 w-3 text-accent-foreground" />
+              ) : (
+                <Play className="h-3 w-3 text-primary-foreground ml-0.5" />
+              )}
+            </button>
 
-          <div className={`flex items-end gap-[2px] h-4 shrink-0 transition-opacity ${isPlaying ? "opacity-100" : "opacity-0"}`}>
-            {[0, 0.15, 0.3, 0.1].map((delay, i) => (
-              <span
-                key={i}
-                className="w-[2px] bg-accent rounded-full animate-bounce"
-                style={{
-                  animationDelay: `${delay}s`,
-                  animationDuration: "0.6s",
-                  height: `${8 + (i % 3) * 4}px`,
-                }}
-              />
-            ))}
+            {/* Animated bars */}
+            <div className={`flex items-end gap-[2px] h-3.5 transition-all duration-300 ${isPlaying ? "opacity-100 w-4" : "opacity-0 w-0"}`}>
+              {[0, 0.15, 0.3, 0.1].map((delay, i) => (
+                <span
+                  key={i}
+                  className="w-[2px] bg-primary rounded-full animate-bounce"
+                  style={{
+                    animationDelay: `${delay}s`,
+                    animationDuration: "0.6s",
+                    height: `${6 + (i % 3) * 3}px`,
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="flex flex-col leading-none">
+              <span className="text-[11px] font-bold text-foreground whitespace-nowrap">
+                Radio Ganadera
+              </span>
+              {isPlaying && (
+                <span className="text-[9px] font-semibold text-accent whitespace-nowrap">
+                  EN VIVO
+                </span>
+              )}
+            </div>
           </div>
 
-          <Radio className="h-3.5 w-3.5 text-accent shrink-0" />
-          <span className="text-xs font-bold text-primary-foreground whitespace-nowrap">
-            Radio Ganadera
-          </span>
-
-          <span className={`hidden xl:flex items-center gap-1 text-[10px] font-bold text-accent transition-opacity ${isPlaying ? "opacity-100" : "opacity-0"}`}>
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-            VIVO
-          </span>
-
-          <button
-            onClick={toggleMute}
-            className="text-primary-foreground/60 hover:text-accent transition-colors ml-1"
-          >
-            {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-          </button>
-          <div className="w-16 hidden xl:block">
-            <Slider
-              value={isMuted ? [0] : volume}
-              onValueChange={setVolume}
-              max={100}
-              step={1}
-              className="[&_[role=slider]]:bg-accent [&_[role=slider]]:border-accent [&_[role=slider]]:h-3 [&_[role=slider]]:w-3 [&_.range]:bg-accent/80"
-            />
+          {/* Volume — only when playing */}
+          <div className={`flex items-center gap-1 transition-all duration-300 ${isPlaying ? "opacity-100 w-auto" : "opacity-0 w-0 overflow-hidden"}`}>
+            <button
+              onClick={toggleMute}
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+            </button>
+            <div className="w-14 hidden xl:block">
+              <Slider
+                value={isMuted ? [0] : volume}
+                onValueChange={setVolume}
+                max={100}
+                step={1}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-2.5 [&_[role=slider]]:w-2.5 [&_.range]:bg-primary/60"
+              />
+            </div>
           </div>
         </div>
 
