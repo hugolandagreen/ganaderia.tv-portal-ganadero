@@ -359,6 +359,11 @@ const AsistenteIA = () => {
                   </button>
                 </div>
               )}
+
+              {/* Sponsor ad in sidebar */}
+              <div className="mt-3">
+                <AdBanner placement="assistant_sidebar" variant="sidebar" />
+              </div>
             </div>
           </aside>
         )}
