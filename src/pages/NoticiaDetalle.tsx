@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { categoryBadge, type Category } from "@/data/news";
 import ReaderCount from "@/components/ReaderCount";
 import SocialShare from "@/components/SocialShare";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const categoryLabels: Record<Category, { es: string; pt: string }> = {
