@@ -83,9 +83,22 @@ serve(async (req) => {
     if (action === "remove_role") {
       const { userId, role } = params;
       if (!userId || !role) throw new Error("userId and role required");
-      // Prevent removing own admin role
-      if (userId === callerUid && role === "admin") {
+      // Prevent removing own admin/super_admin role
+      if (userId === callerUid && (role === "admin" || role === "super_admin")) {
         throw new Error("No puedes quitarte el rol de admin a ti mismo");
+      }
+      // Only super_admin can remove super_admin role from others
+      if (role === "super_admin" && !isSuperAdmin) {
+        throw new Error("Solo un super administrador puede quitar este rol");
+      }
+      // Non-super admins cannot modify super_admin users
+      const { data: targetRoles } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId);
+      const targetIsSuperAdmin = (targetRoles || []).some((r: any) => r.role === "super_admin");
+      if (targetIsSuperAdmin && !isSuperAdmin) {
+        throw new Error("No tienes permisos para modificar a un super administrador");
       }
       const { error } = await supabase
         .from("user_roles")
