@@ -453,7 +453,7 @@ const AsistenteIA = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mb-8"
                 >
-                  <img src={ganaderiaIcon} alt="Ganade object-containrIA" className= object-contain"w-16 h-16 mb-4" />
+                  <img src={ganaderiaIcon} alt="GanaderIA" className="w-16 h-16 mb-4 object-contain" />
                    <h2 className="text-2xl font-display font-extrabold text-foreground mb-2">
                     Bienvenido a Ganader<span className="text-primary">IA</span>
                   </h2>
