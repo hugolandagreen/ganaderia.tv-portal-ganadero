@@ -14,6 +14,11 @@ type AuthContextType = {
   loading: boolean;
   subscription: SubscriptionInfo;
   isPro: boolean;
+  userRoles: string[];
+  isSuperAdmin: boolean;
+  isAdmin: boolean;
+  isNewsEditor: boolean;
+  isCorrespondent: boolean;
   signOut: () => Promise<void>;
   checkSubscription: () => Promise<void>;
 };
@@ -24,6 +29,11 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   subscription: { subscribed: false, productId: null, subscriptionEnd: null },
   isPro: false,
+  userRoles: [],
+  isSuperAdmin: false,
+  isAdmin: false,
+  isNewsEditor: false,
+  isCorrespondent: false,
   signOut: async () => {},
   checkSubscription: async () => {},
 });
@@ -37,11 +47,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [userRoles, setUserRoles] = useState<string[]>([]);
   const [subscription, setSubscription] = useState<SubscriptionInfo>({
     subscribed: false,
     productId: null,
     subscriptionEnd: null,
   });
+
+  const fetchRoles = useCallback(async (userId: string) => {
+    try {
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId);
+      setUserRoles((data || []).map((r: any) => r.role));
+    } catch (e) {
+      console.error("Error fetching roles:", e);
+      setUserRoles([]);
+    }
+  }, []);
 
   const checkSubscription = useCallback(async () => {
     try {
@@ -73,8 +97,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading(false);
         if (session?.user) {
           setTimeout(() => checkSubscription(), 0);
+          setTimeout(() => fetchRoles(session.user.id), 0);
         } else {
           setSubscription({ subscribed: false, productId: null, subscriptionEnd: null });
+          setUserRoles([]);
         }
       }
     );
@@ -85,10 +111,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
       if (session?.user) {
         checkSubscription();
+        fetchRoles(session.user.id);
       }
     });
 
-    // Auto-refresh subscription every 60s
     const interval = setInterval(() => {
       checkSubscription();
     }, 60000);
@@ -97,17 +123,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       authSub.unsubscribe();
       clearInterval(interval);
     };
-  }, [checkSubscription]);
+  }, [checkSubscription, fetchRoles]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
     setSubscription({ subscribed: false, productId: null, subscriptionEnd: null });
+    setUserRoles([]);
   };
 
-  const isPro = subscription.subscribed && subscription.productId === PRO_PRODUCT_ID;
+  const isSuperAdmin = userRoles.includes("super_admin");
+  const isAdmin = userRoles.includes("admin") || isSuperAdmin;
+  const isNewsEditor = userRoles.includes("news_editor") || isAdmin;
+  const isCorrespondent = userRoles.includes("correspondent") || isAdmin;
+
+  // Super admin gets Pro for free
+  const hasSubscription = subscription.subscribed && subscription.productId === PRO_PRODUCT_ID;
+  const isPro = hasSubscription || isSuperAdmin;
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, subscription, isPro, signOut, checkSubscription }}>
+    <AuthContext.Provider value={{
+      user, session, loading, subscription, isPro,
+      userRoles, isSuperAdmin, isAdmin, isNewsEditor, isCorrespondent,
+      signOut, checkSubscription,
+    }}>
       {children}
     </AuthContext.Provider>
   );
