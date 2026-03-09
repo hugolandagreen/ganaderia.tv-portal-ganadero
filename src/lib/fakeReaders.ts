@@ -1,7 +1,6 @@
 /**
  * Generate a deterministic fake reader count that only goes up over time.
- * Uses a hash of the ID to create a unique base + daily increment per item.
- * The count increases every day and never decreases.
+ * Newer items start with very few views; older ones accumulate naturally.
  */
 
 function simpleHash(str: string): number {
@@ -16,26 +15,43 @@ function simpleHash(str: string): number {
 
 export function getFakeReaderCount(id: string, publishedAt: string): number {
   const hash = simpleHash(id);
-  
-  // Base readers: 120–480 (seeded by ID)
-  const base = 120 + (hash % 360);
-  
-  // Days since publication
   const pubDate = new Date(publishedAt);
   const now = new Date();
   const daysSince = Math.max(0, Math.floor((now.getTime() - pubDate.getTime()) / (1000 * 60 * 60 * 24)));
-  
-  // Daily increment: 8–35 readers/day (seeded by ID so each item has its own rate)
-  const dailyRate = 8 + (hash % 28);
-  
-  // Add some "hourly" variation within the current day (only goes up within the day)
   const currentHour = now.getHours();
-  const hourlyBonus = Math.floor((dailyRate / 24) * currentHour);
+
+  // First few hours: just 1-5 views (brand new)
+  if (daysSince === 0) {
+    return 1 + (hash % 3) + Math.floor(currentHour / 6);
+  }
+
+  // Day 1: 8-20 views
+  if (daysSince === 1) {
+    return 8 + (hash % 12) + Math.floor(currentHour / 4);
+  }
+
+  // Days 2-7 (first week): accelerating interest, 25-120 views
+  if (daysSince <= 7) {
+    const weekBase = 20 + (hash % 15);
+    const dailyGrowth = 10 + (hash % 8);
+    return weekBase + (daysSince * dailyGrowth) + Math.floor(currentHour / 6);
+  }
+
+  // After first week: steady growth
+  // Base from first week
+  const weekEnd = 20 + (hash % 15) + (7 * (10 + (hash % 8)));
   
-  // Small per-item variation per day to make it look more organic
-  const dayVariation = (simpleHash(id + daysSince.toString()) % 5);
+  // Slower steady rate: 5-18 readers/day after the initial spike
+  const steadyRate = 5 + (hash % 14);
+  const daysAfterWeek = daysSince - 7;
   
-  return base + (daysSince * dailyRate) + hourlyBonus + dayVariation;
+  // Slight organic variation per day
+  const dayVariation = simpleHash(id + daysSince.toString()) % 4;
+  
+  // Hourly bonus within current day
+  const hourlyBonus = Math.floor((steadyRate / 24) * currentHour);
+
+  return weekEnd + (daysAfterWeek * steadyRate) + hourlyBonus + dayVariation;
 }
 
 export function formatReaderCount(count: number): string {
