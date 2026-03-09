@@ -16,7 +16,9 @@ export type Database = {
     Tables: {
       news: {
         Row: {
+          author: string
           category: string
+          content: string | null
           country: string
           created_at: string
           created_by: string | null
@@ -28,7 +30,9 @@ export type Database = {
           title: string
         }
         Insert: {
+          author?: string
           category?: string
+          content?: string | null
           country?: string
           created_at?: string
           created_by?: string | null
@@ -40,7 +44,9 @@ export type Database = {
           title: string
         }
         Update: {
+          author?: string
           category?: string
+          content?: string | null
           country?: string
           created_at?: string
           created_by?: string | null
