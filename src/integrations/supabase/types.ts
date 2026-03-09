@@ -281,6 +281,8 @@ export type Database = {
         | "detail_after_content"
         | "assistant_sidebar"
         | "global_leaderboard"
+        | "hero_sponsor_left"
+        | "hero_sponsor_right"
       app_role:
         | "admin"
         | "news_editor"
@@ -425,6 +427,8 @@ export const Constants = {
         "detail_after_content",
         "assistant_sidebar",
         "global_leaderboard",
+        "hero_sponsor_left",
+        "hero_sponsor_right",
       ],
       app_role: [
         "admin",
