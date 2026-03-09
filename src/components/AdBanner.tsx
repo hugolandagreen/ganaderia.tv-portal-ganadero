@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Megaphone, Mail } from "lucide-react";
+import { Megaphone, Mail } from "lucide-react";
 import { useSponsors, type AdPlacement } from "@/hooks/useSponsors";
 import { useLang } from "@/contexts/LangContext";
 
@@ -22,12 +22,19 @@ const placeholderTexts = {
   },
 };
 
+// Ensure URL is absolute
+const formatUrl = (url: string): string => {
+  if (!url || url === "#") return "#";
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `https://${url}`;
+};
+
 const AdBanner = ({ placement, variant = "banner", className = "" }: AdBannerProps) => {
   const { data: sponsors } = useSponsors(placement);
   const { lang } = useLang();
   const txt = placeholderTexts[lang];
 
-  // If there are active sponsors, render them
+  // If there are active sponsors, render them (image only)
   if (sponsors && sponsors.length > 0) {
     return (
       <div className={className}>
@@ -40,104 +47,55 @@ const AdBanner = ({ placement, variant = "banner", className = "" }: AdBannerPro
           >
             {variant === "banner" && (
               <a
-                href={sponsor.link_url}
+                href={formatUrl(sponsor.link_url)}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="block relative overflow-hidden rounded-2xl border border-border/50 group hover:shadow-lg transition-all"
+                className="block relative overflow-hidden rounded-2xl group hover:shadow-lg transition-all"
               >
-                <div className="relative h-28 sm:h-36 md:h-44 overflow-hidden">
-                  <img
-                    src={sponsor.image_url}
-                    alt={sponsor.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/40 to-transparent" />
-                  <div className="absolute inset-0 flex items-center px-6 sm:px-10">
-                    <div className="text-white max-w-lg">
-                      {sponsor.badge_text && (
-                        <span className="inline-block text-[10px] uppercase tracking-wider font-bold bg-accent text-accent-foreground px-2 py-0.5 rounded-full mb-2">
-                          {sponsor.badge_text}
-                        </span>
-                      )}
-                      <h3 className="font-display font-bold text-lg sm:text-xl md:text-2xl mb-1 drop-shadow-md">
-                        {sponsor.name}
-                      </h3>
-                      {sponsor.description && (
-                        <p className="text-xs sm:text-sm text-white/80 mb-3 line-clamp-2">{sponsor.description}</p>
-                      )}
-                      <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-accent group-hover:gap-2.5 transition-all">
-                        {sponsor.cta_text} <ExternalLink className="h-3.5 w-3.5" />
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <img
+                  src={sponsor.image_url}
+                  alt={sponsor.name}
+                  className="w-full h-28 sm:h-36 md:h-44 object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
               </a>
             )}
 
             {variant === "inline" && (
               <a
-                href={sponsor.link_url}
+                href={formatUrl(sponsor.link_url)}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:border-primary/30 hover:shadow-md transition-all group"
+                className="block rounded-xl overflow-hidden group hover:shadow-md transition-all"
               >
                 <img
                   src={sponsor.image_url}
                   alt={sponsor.name}
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover flex-shrink-0"
+                  className="w-full h-20 sm:h-24 object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
-                <div className="flex-1 min-w-0">
-                  {sponsor.badge_text && (
-                    <span className="text-[9px] uppercase tracking-wider font-bold text-accent">{sponsor.badge_text}</span>
-                  )}
-                  <h4 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors truncate">{sponsor.name}</h4>
-                  {sponsor.description && (
-                    <p className="text-xs text-muted-foreground line-clamp-1">{sponsor.description}</p>
-                  )}
-                </div>
-                <span className="text-xs font-bold text-primary flex items-center gap-1 shrink-0">
-                  {sponsor.cta_text} <ExternalLink className="h-3 w-3" />
-                </span>
               </a>
             )}
 
             {variant === "sidebar" && (
               <a
-                href={sponsor.link_url}
+                href={formatUrl(sponsor.link_url)}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="block rounded-xl border border-border overflow-hidden bg-card hover:border-primary/30 hover:shadow-md transition-all group"
+                className="block rounded-xl overflow-hidden group hover:shadow-md transition-all"
               >
-                <div className="relative h-32 overflow-hidden">
-                  <img
-                    src={sponsor.image_url}
-                    alt={sponsor.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  {sponsor.badge_text && (
-                    <span className="absolute top-2 left-2 text-[9px] uppercase tracking-wider font-bold bg-accent text-accent-foreground px-2 py-0.5 rounded-full">
-                      {sponsor.badge_text}
-                    </span>
-                  )}
-                </div>
-                <div className="p-3">
-                  <h4 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{sponsor.name}</h4>
-                  {sponsor.description && (
-                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{sponsor.description}</p>
-                  )}
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-primary mt-2">
-                    {sponsor.cta_text} <ExternalLink className="h-3 w-3" />
-                  </span>
-                </div>
+                <img
+                  src={sponsor.image_url}
+                  alt={sponsor.name}
+                  className="w-full h-32 sm:h-40 object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
               </a>
             )}
 
             {variant === "leaderboard" && (
               <a
-                href={sponsor.link_url}
+                href={formatUrl(sponsor.link_url)}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
                 className="block relative overflow-hidden rounded-xl group"
