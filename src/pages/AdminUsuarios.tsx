@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import Navbar from "@/components/Navbar";
 import { Shield, Trash2, UserPlus, UserMinus, Users, Crown, Newspaper, Globe, Loader2 } from "lucide-react";
 
 type UserProfile = {
