@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Settings, Users, Newspaper, ChevronLeft, ChevronRight, Crown, Shield, Bot, Globe
+  Settings, Users, Newspaper, BookOpen, ChevronLeft, ChevronRight, Crown, Shield, Bot, Globe
 } from "lucide-react";
 
 const AdminPanel = () => {
