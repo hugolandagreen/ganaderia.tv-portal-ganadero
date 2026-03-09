@@ -42,8 +42,7 @@ const NoticiaDetalle = () => {
 
   if (error || !news) {
     return (
-      <main className="min-h-screen bg-background">
-        <Navbar />
+      <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
         <div className="pt-28 pb-20 text-center">
           <h1 className="text-2xl font-bold text-foreground mb-4">Noticia no encontrada</h1>
           <Link to="/noticias" className="text-primary hover:underline">
