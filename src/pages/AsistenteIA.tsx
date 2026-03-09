@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Bot, Send, Loader2, Crown, Lock, Plus, MessageSquare, Trash2, ArrowLeft, Sparkles, TrendingUp, Dna, Stethoscope, DollarSign, Wheat } from "lucide-react";
+import { Bot, Send, Loader2, Crown, Lock, Plus, MessageSquare, Trash2, Sparkles, TrendingUp, Dna, Stethoscope, DollarSign, Wheat, Check, Brain, Zap, Shield, Leaf } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { PRO_PRICE_ID } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import RadioPlayer from "@/components/RadioPlayer";
@@ -71,6 +72,15 @@ const suggestionCategories = [
       "¿Cuántas cabezas necesito para que mi rancho sea rentable?",
     ],
   },
+];
+
+const proFeatures = [
+  { icon: Brain, text: "Asesoría personalizada según tu ganado y región" },
+  { icon: TrendingUp, text: "Análisis de mercados y precios en tiempo real" },
+  { icon: Leaf, text: "Planes de nutrición y manejo de pasturas" },
+  { icon: Shield, text: "Protocolos sanitarios y prevención" },
+  { icon: Zap, text: "Consultas ilimitadas sin restricciones" },
+  { icon: DollarSign, text: "Gestión financiera y costos de producción" },
 ];
 
 async function streamChat({
@@ -154,9 +164,10 @@ async function streamChat({
 }
 
 const AsistenteIA = () => {
-  const { user, isPro } = useAuth();
+  const { user, isPro, subscription } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [proLoading, setProLoading] = useState(false);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -371,6 +382,34 @@ const AsistenteIA = () => {
                   </p>
                 )}
               </div>
+
+              {/* Pro upsell in sidebar */}
+              {!isPro && (
+                <div className="mt-4 p-3 rounded-xl border border-primary/20 bg-primary/5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown className="h-4 w-4 text-primary" />
+                    <span className="text-xs font-bold text-primary">Plan Pro</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3">Consultas ilimitadas y asesoría personalizada</p>
+                  <button
+                    onClick={async () => {
+                      if (!user) { navigate("/auth"); return; }
+                      setProLoading(true);
+                      try {
+                        const { data, error } = await supabase.functions.invoke("create-checkout", { body: { priceId: PRO_PRICE_ID } });
+                        if (error) throw error;
+                        if (data?.url) window.open(data.url, "_blank");
+                      } catch (e: any) {
+                        toast({ title: "Error", description: e.message, variant: "destructive" });
+                      } finally { setProLoading(false); }
+                    }}
+                    disabled={proLoading}
+                    className="w-full text-xs py-2 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
+                  >
+                    {proLoading ? "Cargando..." : "$9.99/mes"}
+                  </button>
+                </div>
+              )}
             </div>
           </aside>
         )}
@@ -451,6 +490,54 @@ const AsistenteIA = () => {
                     </motion.div>
                   ))}
                 </div>
+
+                {/* Pro banner in welcome */}
+                {!isPro && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="max-w-2xl mx-auto mt-8"
+                  >
+                    <div className="bg-card border border-primary/20 rounded-xl p-6 flex flex-col md:flex-row items-center gap-6">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Crown className="h-5 w-5 text-primary" />
+                          <h3 className="font-bold text-foreground">Asistente Ganadero Pro</h3>
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-bold">$9.99/mes</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Asesoría personalizada con IA para llevar tu ganadería al siguiente nivel
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                          {proFeatures.slice(0, 4).map((f, i) => (
+                            <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+                              <Check className="h-3 w-3 text-primary flex-shrink-0" />
+                              {f.text}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <button
+                        onClick={async () => {
+                          if (!user) { navigate("/auth"); return; }
+                          setProLoading(true);
+                          try {
+                            const { data, error } = await supabase.functions.invoke("create-checkout", { body: { priceId: PRO_PRICE_ID } });
+                            if (error) throw error;
+                            if (data?.url) window.open(data.url, "_blank");
+                          } catch (e: any) {
+                            toast({ title: "Error", description: e.message, variant: "destructive" });
+                          } finally { setProLoading(false); }
+                        }}
+                        disabled={proLoading}
+                        className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors disabled:opacity-50 shadow-md whitespace-nowrap"
+                      >
+                        {proLoading ? "Cargando..." : user ? "Suscribirme" : "Acceder para suscribirte"}
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             ) : (
               <div className="max-w-3xl mx-auto px-4 py-6 space-y-4">

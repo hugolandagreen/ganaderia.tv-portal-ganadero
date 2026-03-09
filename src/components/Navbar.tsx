@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Menu, X, Radio, Volume2, VolumeX, Play, Square, User, LogOut, Crown } from "lucide-react";
+import { Menu, X, Radio, Volume2, VolumeX, Play, Square, User, LogOut, Crown, Bot } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -13,7 +13,6 @@ const navLinks = [
   { label: "Programación", href: "/#programacion" },
   { label: "Artículos", href: "/#articulos" },
   { label: "Asistente IA", href: "/asistente-ia" },
-  { label: "Pro", href: "/#pro" },
 ];
 
 const Navbar = () => {
@@ -181,7 +180,7 @@ const Navbar = () => {
                     <span className="h-2 w-2 rounded-full bg-destructive animate-pulse-live" />
                   )}
                   {link.label}
-                  {link.label === "Pro" && <Crown className="h-4 w-4 text-primary" />}
+                  {link.label === "Asistente IA" && <Bot className="h-4 w-4 text-primary" />}
                 </a>
               ))}
               {/* Mobile auth */}
