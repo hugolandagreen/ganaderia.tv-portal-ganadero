@@ -6,6 +6,7 @@ import { useArticles } from "@/hooks/useArticles";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import ReaderCount from "@/components/ReaderCount";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const Articulos = () => {

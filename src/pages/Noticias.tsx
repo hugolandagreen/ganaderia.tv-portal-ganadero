@@ -202,6 +202,11 @@ const Noticias = () => {
               <p className="text-sm">{t("news_try_another")}</p>
             </motion.div>
           )}
+
+          {/* Inline ad after news grid */}
+          <div className="mt-10">
+            <AdBanner placement="news_inline" variant="inline" />
+          </div>
         </div>
       </section>
 
