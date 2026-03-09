@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Bot, Send, Loader2, Crown, Lock, Plus, MessageSquare, Trash2, ArrowLeft, Sparkles, TrendingUp, Dna, Stethoscope, DollarSign, Wheat } from "lucide-react";
+import { Bot, Send, Loader2, Crown, Lock, Plus, MessageSquare, Trash2, Sparkles, TrendingUp, Dna, Stethoscope, DollarSign, Wheat, Check, Brain, Zap, Shield, Leaf } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
