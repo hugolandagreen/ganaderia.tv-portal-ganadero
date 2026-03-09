@@ -38,6 +38,7 @@ const App = () => (
               <Route path="/asistente-ia" element={<AsistenteIA />} />
               <Route path="/admin/noticias" element={<AdminNoticias />} />
               <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+              <Route path="/admin/articulos" element={<AdminArticulos />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="*" element={<NotFound />} />

@@ -20,7 +20,10 @@ const AdminPanel = () => {
       ? [{ label: "Usuarios", icon: Users, path: "/admin/usuarios", description: "Gestionar roles y usuarios" }]
       : []),
     ...(isNewsEditor || isCorrespondent
-      ? [{ label: "Noticias", icon: Newspaper, path: "/admin/noticias", description: "Crear y editar noticias" }]
+      ? [
+          { label: "Noticias", icon: Newspaper, path: "/admin/noticias", description: "Crear y editar noticias" },
+          { label: "Artículos", icon: BookOpen, path: "/admin/articulos", description: "Crear y editar artículos" },
+        ]
       : []),
     { label: "GanaderIA", icon: Bot, path: "/asistente-ia", description: isPro ? "Acceso Pro ilimitado" : "Asistente IA" },
   ];
