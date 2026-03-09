@@ -6,6 +6,7 @@ import type { NewsRow } from "@/hooks/useNews";
 import { countries } from "@/data/news";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
