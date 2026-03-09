@@ -17,6 +17,8 @@ import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import AsistenteIA from "./pages/AsistenteIA";
 import AdminUsuarios from "./pages/AdminUsuarios";
+import Articulos from "./pages/Articulos";
+import ArticuloDetalle from "./pages/ArticuloDetalle";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,8 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/noticias" element={<Noticias />} />
               <Route path="/noticia/:id" element={<NoticiaDetalle />} />
+              <Route path="/articulos" element={<Articulos />} />
+              <Route path="/articulo/:id" element={<ArticuloDetalle />} />
               <Route path="/asistente-ia" element={<AsistenteIA />} />
               <Route path="/admin/noticias" element={<AdminNoticias />} />
               <Route path="/admin/usuarios" element={<AdminUsuarios />} />
