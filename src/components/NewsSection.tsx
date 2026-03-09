@@ -47,13 +47,13 @@ const NewsSection = () => {
         >
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
             <Newspaper className="h-4 w-4" />
-            Últimas noticias
+            {t("news_latest")}
           </div>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-3">
-            Noticias <span className="text-gradient-gold">Ganaderas</span>
+            {t("news_title")} <span className="text-gradient-gold">{t("news_title_highlight")}</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Información actualizada del sector ganadero mundial
+            {t("news_subtitle")}
           </p>
         </motion.div>
 
