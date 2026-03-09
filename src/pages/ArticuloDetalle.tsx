@@ -3,9 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, User, Clock, Share2, BookOpen } from "lucide-react";
+import { ArrowLeft, Calendar, User, Clock, BookOpen } from "lucide-react";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import ReaderCount from "@/components/ReaderCount";
+import SocialShare from "@/components/SocialShare";
 
 const ArticuloDetalle = () => {
   const { id } = useParams<{ id: string }>();
@@ -55,18 +56,6 @@ const ArticuloDetalle = () => {
 
   const publishedDate = new Date(article.published_at);
   const readTime = Math.max(2, Math.ceil((article.content?.length || 0) / 1000));
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      await navigator.share({
-        title: article.title,
-        text: article.description || "",
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-    }
-  };
 
   return (
     <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
@@ -142,10 +131,13 @@ const ArticuloDetalle = () => {
                   <Clock className="h-4 w-4" />
                   <span>{readTime} min de lectura</span>
                 </div>
-                <Button variant="ghost" size="sm" onClick={handleShare} className="ml-auto">
-                  <Share2 className="h-4 w-4 mr-1" />
-                  Compartir
-                </Button>
+                <ReaderCount id={article.id} publishedAt={article.published_at} size="md" />
+              </div>
+
+              {/* Social share */}
+              <div className="flex items-center gap-3 mb-8 pb-8 border-b border-border">
+                <span className="text-sm font-semibold text-foreground">Compartir:</span>
+                <SocialShare title={article.title} text={article.description || ""} size="md" />
               </div>
 
               {/* Description */}

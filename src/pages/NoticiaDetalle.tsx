@@ -3,10 +3,11 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, User, Globe, Clock, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, User, Clock, Eye } from "lucide-react";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import { categoryBadge, type Category } from "@/data/news";
+import ReaderCount from "@/components/ReaderCount";
+import SocialShare from "@/components/SocialShare";
 
 const NoticiaDetalle = () => {
   const { id } = useParams<{ id: string }>();
@@ -57,18 +58,6 @@ const NoticiaDetalle = () => {
   const badge = categoryBadge[news.category as Category] || categoryBadge.lechero;
   const publishedDate = new Date(news.published_at);
   const readTime = Math.max(2, Math.ceil((news.content?.length || 0) / 1000));
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      await navigator.share({
-        title: news.title,
-        text: news.summary || "",
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-    }
-  };
 
   return (
     <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
@@ -146,15 +135,13 @@ const NoticiaDetalle = () => {
                   <Clock className="h-4 w-4" />
                   <span>{readTime} min de lectura</span>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleShare}
-                  className="ml-auto"
-                >
-                  <Share2 className="h-4 w-4 mr-1" />
-                  Compartir
-                </Button>
+                <ReaderCount id={news.id} publishedAt={news.published_at} size="md" />
+              </div>
+
+              {/* Social share */}
+              <div className="flex items-center gap-3 mb-8 pb-8 border-b border-border">
+                <span className="text-sm font-semibold text-foreground">Compartir:</span>
+                <SocialShare title={news.title} text={news.summary || ""} size="md" />
               </div>
 
               {/* Summary */}

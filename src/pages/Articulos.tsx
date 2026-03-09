@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useArticles } from "@/hooks/useArticles";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
+import ReaderCount from "@/components/ReaderCount";
 
 const Articulos = () => {
   const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -155,10 +156,13 @@ const Articulos = () => {
 
                         {/* Content */}
                         <div className="p-5">
-                          <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
-                            <span>{date.toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" })}</span>
-                            <span>·</span>
-                            <span>{readTime} min de lectura</span>
+                          <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
+                            <div className="flex items-center gap-2">
+                              <span>{date.toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" })}</span>
+                              <span>·</span>
+                              <span>{readTime} min</span>
+                            </div>
+                            <ReaderCount id={article.id} publishedAt={article.published_at} />
                           </div>
                           <h3 className="font-display font-bold text-lg leading-snug mb-2 text-foreground group-hover:text-primary transition-colors line-clamp-2">
                             {article.title}
