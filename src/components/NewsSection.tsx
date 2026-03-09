@@ -170,8 +170,9 @@ const NewsSection = () => {
                         {news.title}
                       </h3>
                       <div className="flex items-center gap-1.5 text-sm font-bold text-primary group-hover:gap-3 transition-all">
-                        <span>Leer más</span>
+                        <span>{t("news_read_more")}</span>
                         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </div>
                       </div>
                     </div>
                   </Link>
