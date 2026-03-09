@@ -6,6 +6,7 @@ import { useArticles } from "@/hooks/useArticles";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import ReaderCount from "@/components/ReaderCount";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const Articulos = () => {
@@ -106,6 +107,11 @@ const Articulos = () => {
             </div>
           )}
 
+          {/* Top ad banner */}
+          <div className="mb-8">
+            <AdBanner placement="articles_top" variant="banner" />
+          </div>
+
           <p className="text-sm text-muted-foreground mb-6">
             {t("news_showing")} <span className="font-bold text-foreground">{filtered.length}</span> {t("articles_showing")}
           </p>
@@ -198,6 +204,11 @@ const Articulos = () => {
               <p className="text-sm">{t("articles_try_another")}</p>
             </motion.div>
           )}
+
+          {/* Inline ad after articles */}
+          <div className="mt-10">
+            <AdBanner placement="articles_inline" variant="inline" />
+          </div>
         </div>
       </section>
 

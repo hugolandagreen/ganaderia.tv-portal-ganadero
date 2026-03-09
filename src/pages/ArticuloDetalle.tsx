@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar, User, Clock, BookOpen } from "lucide-react";
 import Footer from "@/components/Footer";
 import ReaderCount from "@/components/ReaderCount";
 import SocialShare from "@/components/SocialShare";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const ArticuloDetalle = () => {
@@ -160,6 +161,11 @@ const ArticuloDetalle = () => {
                   {t("detail_no_content")}
                 </p>
               )}
+            </div>
+
+            {/* Ad after content */}
+            <div className="mt-8">
+              <AdBanner placement="detail_after_content" variant="banner" />
             </div>
           </motion.article>
         </div>

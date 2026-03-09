@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
 import ReaderCount from "@/components/ReaderCount";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const categoryIcons: Record<Category, React.ReactNode> = {
@@ -112,6 +113,11 @@ const Noticias = () => {
             })}
           </div>
 
+          {/* Top ad banner */}
+          <div className="mb-8">
+            <AdBanner placement="news_top" variant="banner" />
+          </div>
+
           {/* Results count */}
           <p className="text-sm text-muted-foreground mb-6">
             {t("news_showing")} <span className="font-bold text-foreground">{filtered.length}</span> {t("news_count_label")}
@@ -196,6 +202,11 @@ const Noticias = () => {
               <p className="text-sm">{t("news_try_another")}</p>
             </motion.div>
           )}
+
+          {/* Inline ad after news grid */}
+          <div className="mt-10">
+            <AdBanner placement="news_inline" variant="inline" />
+          </div>
         </div>
       </section>
 

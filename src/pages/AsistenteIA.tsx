@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { PRO_PRICE_ID } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import ganaderiaIcon from "@/assets/ganaderia-icon.png";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 type Message = { role: "user" | "assistant"; content: string };
@@ -358,6 +359,11 @@ const AsistenteIA = () => {
                   </button>
                 </div>
               )}
+
+              {/* Sponsor ad in sidebar */}
+              <div className="mt-3">
+                <AdBanner placement="assistant_sidebar" variant="sidebar" />
+              </div>
             </div>
           </aside>
         )}

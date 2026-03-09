@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Settings, Users, Newspaper, BookOpen, ChevronLeft, ChevronRight, Crown, Shield, Bot, Globe
+  Settings, Users, Newspaper, BookOpen, ChevronLeft, ChevronRight, Crown, Shield, Bot, Globe, Megaphone
 } from "lucide-react";
 
 const AdminPanel = () => {
@@ -17,7 +17,10 @@ const AdminPanel = () => {
 
   const menuItems = [
     ...(isAdmin
-      ? [{ label: "Usuarios", icon: Users, path: "/admin/usuarios", description: "Gestionar roles y usuarios" }]
+      ? [
+          { label: "Usuarios", icon: Users, path: "/admin/usuarios", description: "Gestionar roles y usuarios" },
+          { label: "Anuncios", icon: Megaphone, path: "/admin/sponsors", description: "Gestionar patrocinadores" },
+        ]
       : []),
     ...(isNewsEditor || isCorrespondent
       ? [

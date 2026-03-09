@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { categoryBadge, type Category } from "@/data/news";
 import ReaderCount from "@/components/ReaderCount";
 import SocialShare from "@/components/SocialShare";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const categoryLabels: Record<Category, { es: string; pt: string }> = {
@@ -171,6 +172,11 @@ const NoticiaDetalle = () => {
                   {t("detail_no_content")}
                 </p>
               )}
+            </div>
+
+            {/* Ad after content */}
+            <div className="mt-8">
+              <AdBanner placement="detail_after_content" variant="banner" />
             </div>
           </motion.article>
         </div>

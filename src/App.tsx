@@ -21,6 +21,7 @@ import AsistenteIA from "./pages/AsistenteIA";
 import AdminUsuarios from "./pages/AdminUsuarios";
 import Articulos from "./pages/Articulos";
 import ArticuloDetalle from "./pages/ArticuloDetalle";
+import AdminSponsors from "./pages/AdminSponsors";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/admin/noticias" element={<AdminNoticias />} />
               <Route path="/admin/usuarios" element={<AdminUsuarios />} />
               <Route path="/admin/articulos" element={<AdminArticulos />} />
+              <Route path="/admin/sponsors" element={<AdminSponsors />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="*" element={<NotFound />} />

@@ -190,6 +190,54 @@ export type Database = {
         }
         Relationships: []
       }
+      sponsors: {
+        Row: {
+          badge_text: string | null
+          created_at: string
+          created_by: string | null
+          cta_text: string
+          description: string | null
+          display_order: number
+          id: string
+          image_url: string
+          is_active: boolean
+          link_url: string
+          name: string
+          placement: Database["public"]["Enums"]["ad_placement"]
+          updated_at: string
+        }
+        Insert: {
+          badge_text?: string | null
+          created_at?: string
+          created_by?: string | null
+          cta_text?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          image_url: string
+          is_active?: boolean
+          link_url?: string
+          name: string
+          placement?: Database["public"]["Enums"]["ad_placement"]
+          updated_at?: string
+        }
+        Update: {
+          badge_text?: string | null
+          created_at?: string
+          created_by?: string | null
+          cta_text?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          image_url?: string
+          is_active?: boolean
+          link_url?: string
+          name?: string
+          placement?: Database["public"]["Enums"]["ad_placement"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -222,6 +270,17 @@ export type Database = {
       }
     }
     Enums: {
+      ad_placement:
+        | "home_after_news"
+        | "home_after_programming"
+        | "home_after_articles"
+        | "news_top"
+        | "news_inline"
+        | "articles_top"
+        | "articles_inline"
+        | "detail_after_content"
+        | "assistant_sidebar"
+        | "global_leaderboard"
       app_role:
         | "admin"
         | "news_editor"
@@ -355,6 +414,18 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      ad_placement: [
+        "home_after_news",
+        "home_after_programming",
+        "home_after_articles",
+        "news_top",
+        "news_inline",
+        "articles_top",
+        "articles_inline",
+        "detail_after_content",
+        "assistant_sidebar",
+        "global_leaderboard",
+      ],
       app_role: [
         "admin",
         "news_editor",
