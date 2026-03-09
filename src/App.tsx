@@ -12,6 +12,7 @@ import Index from "./pages/Index";
 import Noticias from "./pages/Noticias";
 import NoticiaDetalle from "./pages/NoticiaDetalle";
 import AdminNoticias from "./pages/AdminNoticias";
+import AdminArticulos from "./pages/AdminArticulos";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import AsistenteIA from "./pages/AsistenteIA";
