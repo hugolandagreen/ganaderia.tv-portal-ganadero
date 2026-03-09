@@ -187,7 +187,7 @@ const AsistenteIA = () => {
   const hasScrolled = useRef(false);
 
   useEffect(() => {
-    document.title = "Asistente IA | Ganaderia.TV";
+    document.title = "GanaderIA – Asistente Ganadero con IA | Ganaderia.TV";
     return () => { document.title = "Ganaderia.TV"; };
   }, []);
 
