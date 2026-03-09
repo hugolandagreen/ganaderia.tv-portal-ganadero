@@ -5,7 +5,8 @@ import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import {  Lock, ArrowLeft } from "lucide-react";
+import { Mail, Lock, ArrowLeft } from "lucide-react";
+import ganaderiaIcon from "@/assets/ganaderia-icon.png";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
