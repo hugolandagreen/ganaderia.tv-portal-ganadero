@@ -117,7 +117,7 @@ const NewsSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
           <AnimatePresence mode="popLayout">
             {filtered.map((news, i) => {
-              const badge = categoryBadge[news.category as Category] || categoryBadge.lechero;
+              const badge = categoryBadge[news.category as Category] || categoryBadge.lecheroo;
               return (
                 <motion.article
                   key={news.id}
@@ -175,7 +175,7 @@ const NewsSection = () => {
             animate={{ opacity: 1 }}
             className="text-center py-16 text-muted-foreground"
           >
-            <Globe className="h-12 w-12 mx-auto mb-3 opacity-40" />
+            Newspapere className="h-12 w-12 mx-auto mb-3 opacity-40" />
             <p className="text-lg font-semibold">No hay noticias para estos filtros</p>
             <p className="text-sm">Prueba con otra combinación de país o categoría</p>
           </motion.div>
