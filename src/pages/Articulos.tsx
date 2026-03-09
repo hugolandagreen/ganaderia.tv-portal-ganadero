@@ -107,6 +107,11 @@ const Articulos = () => {
             </div>
           )}
 
+          {/* Top ad banner */}
+          <div className="mb-8">
+            <AdBanner placement="articles_top" variant="banner" />
+          </div>
+
           <p className="text-sm text-muted-foreground mb-6">
             {t("news_showing")} <span className="font-bold text-foreground">{filtered.length}</span> {t("articles_showing")}
           </p>

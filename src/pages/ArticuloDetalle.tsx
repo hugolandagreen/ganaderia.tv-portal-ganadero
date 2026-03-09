@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar, User, Clock, BookOpen } from "lucide-react";
 import Footer from "@/components/Footer";
 import ReaderCount from "@/components/ReaderCount";
 import SocialShare from "@/components/SocialShare";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const ArticuloDetalle = () => {
