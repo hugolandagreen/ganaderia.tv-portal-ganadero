@@ -11,7 +11,9 @@ export type AdPlacement =
   | "articles_inline"
   | "detail_after_content"
   | "assistant_sidebar"
-  | "global_leaderboard";
+  | "global_leaderboard"
+  | "hero_sponsor_left"
+  | "hero_sponsor_right";
 
 export interface Sponsor {
   id: string;
