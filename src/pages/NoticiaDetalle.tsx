@@ -170,13 +170,10 @@ const NoticiaDetalle = () => {
 
               {/* Content */}
               {news.content ? (
-                <div className="prose prose-lg max-w-none text-foreground">
-                  {news.content.split("\n").map((paragraph, i) => (
-                    <p key={i} className="mb-4 leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+                <div
+                  className="prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-a:text-primary prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-strong:text-foreground"
+                  dangerouslySetInnerHTML={{ __html: news.content }}
+                />
               ) : (
                 <p className="text-muted-foreground italic">
                   El contenido completo de esta noticia aún no está disponible.

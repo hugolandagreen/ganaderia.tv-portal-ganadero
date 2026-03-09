@@ -184,7 +184,7 @@ const NewsEditDialog = ({ news, open, onOpenChange }: Props) => {
 
           <div className="space-y-2">
             <Label>Contenido completo</Label>
-            <Textarea value={content} onChange={(e) => setContent(e.target.value)} rows={8} />
+            <RichTextEditor content={content} onChange={setContent} />
           </div>
 
           <Button type="submit" className="w-full" disabled={updateNews.isPending || uploading}>
