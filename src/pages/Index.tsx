@@ -28,9 +28,9 @@ const Index = () => {
       <NewsSection />
       <ProgrammingSection />
       <ArticlesSection />
-      <AiAssistant />
       <ProSection />
-      <Footer Player />
+      <Footer />
+      <RadioPlayer />
     </main>
   );
 };
