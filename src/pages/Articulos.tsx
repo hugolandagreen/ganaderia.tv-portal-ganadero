@@ -204,6 +204,11 @@ const Articulos = () => {
               <p className="text-sm">{t("articles_try_another")}</p>
             </motion.div>
           )}
+
+          {/* Inline ad after articles */}
+          <div className="mt-10">
+            <AdBanner placement="articles_inline" variant="inline" />
+          </div>
         </div>
       </section>
 
