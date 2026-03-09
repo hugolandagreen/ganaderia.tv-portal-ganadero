@@ -212,6 +212,17 @@ const AdBanner = ({ placement, variant = "banner", className = "" }: AdBannerPro
           <span className="text-xs text-muted-foreground hidden sm:inline">— publicidad@ganaderia.tv</span>
         </a>
       )}
+
+      {variant === "sponsor_square" && (
+        <a
+          href="mailto:publicidad@ganaderia.tv"
+          className="flex flex-col items-center justify-center aspect-square rounded-xl border-2 border-dashed border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors p-3 text-center"
+        >
+          <Megaphone className="h-6 w-6 text-primary mb-1.5" />
+          <p className="text-[11px] font-bold text-foreground leading-tight">{txt.title}</p>
+          <p className="text-[9px] text-muted-foreground mt-0.5">{txt.cta}</p>
+        </a>
+      )}
     </motion.div>
   );
 };
