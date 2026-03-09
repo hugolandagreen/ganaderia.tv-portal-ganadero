@@ -180,7 +180,7 @@ const Navbar = () => {
                     <span className="h-2 w-2 rounded-full bg-destructive animate-pulse-live" />
                   )}
                   {link.label}
-                  {link.l= "Ganader\u0049\u0041"rIA"der && <Bot className="h-4 w-4 text-primary" />}
+                  {link.href === "/asistente-ia" && <Bot className="h-4 w-4 text-primary" />}
                 </a>
               ))}
               {/* Mobile auth */}
