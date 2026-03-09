@@ -22,6 +22,7 @@ export type Database = {
           country: string
           created_at: string
           created_by: string | null
+          display_order: number
           flag: string
           id: string
           image_url: string
@@ -36,6 +37,7 @@ export type Database = {
           country?: string
           created_at?: string
           created_by?: string | null
+          display_order?: number
           flag?: string
           id?: string
           image_url?: string
@@ -50,6 +52,7 @@ export type Database = {
           country?: string
           created_at?: string
           created_by?: string | null
+          display_order?: number
           flag?: string
           id?: string
           image_url?: string
