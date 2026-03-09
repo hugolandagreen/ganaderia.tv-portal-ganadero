@@ -5,7 +5,7 @@ import { useLang } from "@/contexts/LangContext";
 
 interface AdBannerProps {
   placement: AdPlacement | AdPlacement[];
-  variant?: "banner" | "inline" | "sidebar" | "leaderboard";
+  variant?: "banner" | "inline" | "sidebar" | "leaderboard" | "sponsor_square";
   className?: string;
 }
 

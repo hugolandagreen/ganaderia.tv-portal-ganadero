@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { useTVPlayer, useMediaPlayer } from "@/hooks/useRadioPlayer";
 import logo from "@/assets/logo-ganaderia-tv.png";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const HeroLive = () => {
