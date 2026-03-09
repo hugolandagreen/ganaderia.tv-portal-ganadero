@@ -5,7 +5,8 @@ import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { Bot, Mail, Lock, ArrowLeft } from "lucide-react";
+import { Mail, Lock, ArrowLeft } from "lucide-react";
+import ganaderiaIcon from "@/assets/ganaderia-icon.png";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -62,8 +63,13 @@ const Auth = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-4">
-            <Bot className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-display font-bold text-foreground">Ganaderia.TV</span>
+            <img src={ganaderiaIcon} alt="GanaderIA" className="h-10 w-10 object-contain" />
+            <span className="flex flex-col leading-none gap-0.5">
+              <span className="font-display font-extrabold text-primary tracking-tight text-2xl">
+                Ganader<span className="text-accent">IA</span>
+              </span>
+              <span className="text-[10px] text-muted-foreground font-semibold tracking-wider uppercase">Asistente IA</span>
+            </span>
           </div>
           <h1 className="text-xl font-bold text-foreground">
             {isForgotPassword ? "Restablecer contraseña" : isLogin ? "Iniciar Sesión" : "Crear Cuenta"}
