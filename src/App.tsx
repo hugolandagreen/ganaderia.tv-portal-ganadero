@@ -17,6 +17,8 @@ import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import AsistenteIA from "./pages/AsistenteIA";
 import AdminUsuarios from "./pages/AdminUsuarios";
+import Articulos from "./pages/Articulos";
+import ArticuloDetalle from "./pages/ArticuloDetalle";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
