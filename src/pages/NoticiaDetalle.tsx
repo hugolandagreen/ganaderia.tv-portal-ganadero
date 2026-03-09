@@ -59,18 +59,6 @@ const NoticiaDetalle = () => {
   const publishedDate = new Date(news.published_at);
   const readTime = Math.max(2, Math.ceil((news.content?.length || 0) / 1000));
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      await navigator.share({
-        title: news.title,
-        text: news.summary || "",
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-    }
-  };
-
   return (
     <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
 
