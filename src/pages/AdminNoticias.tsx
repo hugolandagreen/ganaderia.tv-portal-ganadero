@@ -20,9 +20,9 @@ import DraggableNewsList from "@/components/admin/DraggableNewsList";
 import NewsEditDialog from "@/components/admin/NewsEditDialog";
 
 const categories = [
-  { value: "global", label: "Global" },
   { value: "lechero", label: "Ganado Lechero" },
   { value: "carne", label: "Ganado de Carne" },
+  { value: "doble_proposito", label: "Ganado Doble Propósito" },
 ];
 
 const ADMIN_EMAIL = "landaverde.pagos@gmail.com";
