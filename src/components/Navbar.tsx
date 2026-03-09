@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/logo-ganaderia-tv.png";
+import ganaderiaIcon from "@/assets/ganaderia-icon.png";
 
 const navLinks = [
   { label: "EN VIVO", href: "/#en-vivo" },
@@ -67,7 +68,7 @@ const Navbar = () => {
               ) : link.label === "GanaderIA_NAV" ? (
                 <span className="flex flex-col items-center leading-none gap-0.5">
                   <span className="flex items-center gap-1">
-                    <Bot className="h-3.5 w-3.5 text-primary" />
+                    <img src={ganaderiaIcon} alt="" className="h-5 w-5" />
                     <span className="font-display font-extrabold text-primary tracking-tight normal-case">
                       Ganader<span className="text-accent">IA</span>
                     </span>
@@ -191,7 +192,7 @@ const Navbar = () => {
                   )}
                   {link.label === "GanaderIA_NAV" ? (
                     <span className="flex items-center gap-2">
-                      <Bot className="h-4 w-4 text-primary" />
+                      <img src={ganaderiaIcon} alt="" className="h-5 w-5" />
                       <span className="flex flex-col leading-none">
                         <span className="font-display font-extrabold text-primary normal-case">
                           Ganader<span className="text-accent">IA</span>

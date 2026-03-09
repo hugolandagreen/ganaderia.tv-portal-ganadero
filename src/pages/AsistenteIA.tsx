@@ -8,6 +8,7 @@ import { PRO_PRICE_ID } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import RadioPlayer from "@/components/RadioPlayer";
+import ganaderiaIcon from "@/assets/ganaderia-icon.png";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -418,9 +419,10 @@ const AsistenteIA = () => {
         <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
           <div className="border-b border-border bg-card px-4 py-3 flex items-center gap-3">
-            <Bot className="h-6 w-6 text-primary" />
+            <img src={ganaderiaIcon} alt="GanaderIA" className="h-8 w-8" />
             <div className="flex-1">
-              <h1 className="text-lg font-bold text-foreground">GanaderIA</h1>
+              <h1 className="text-lg font-display font-extrabold text-foreground leading-none">Ganader<span className="text-primary">IA</span></h1>
+              <p className="text-[10px] text-muted-foreground font-medium tracking-wider uppercase">Asistente Ganadero con IA</p>
               <p className="text-xs text-muted-foreground">
                 {isPro
                   ? "Consultas ilimitadas • Asesoría personalizada"
@@ -451,14 +453,12 @@ const AsistenteIA = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mb-8"
                 >
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
-                    <Sparkles className="h-8 w-8 text-primary" />
-                  </div>
-                   <h2 className="text-2xl font-bold text-foreground mb-2">
-                    Bienvenido a <span className="text-primary">GanaderIA</span>
+                  <img src={ganaderiaIcon} alt="GanaderIA" className="w-16 h-16 mb-4" />
+                   <h2 className="text-2xl font-display font-extrabold text-foreground mb-2">
+                    Bienvenido a Ganader<span className="text-primary">IA</span>
                   </h2>
                   <p className="text-muted-foreground max-w-md mx-auto">
-                    Soy tu asistente ganadero con inteligencia artificial. Pregúntame sobre precios, razas, nutrición, salud animal y más.
+                    Tu asistente ganadero con inteligencia artificial. Pregúntame sobre precios, razas, nutrición, salud animal y más.
                   </p>
                 </motion.div>
 
@@ -549,7 +549,7 @@ const AsistenteIA = () => {
                         : "bg-muted text-foreground"
                     }`}>
                       {msg.role === "assistant" && (
-                        <Bot className="h-4 w-4 mb-1 text-primary inline-block mr-1.5" />
+                        <img src={ganaderiaIcon} alt="GanaderIA" className="h-4 w-4 mb-1 inline-block mr-1.5" />
                       )}
                       {msg.content}
                     </div>
