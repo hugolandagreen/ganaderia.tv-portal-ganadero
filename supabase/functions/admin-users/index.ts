@@ -26,14 +26,16 @@ serve(async (req) => {
     if (userError || !userData.user) throw new Error("Not authenticated");
 
     const callerUid = userData.user.id;
-    const { data: adminCheck } = await supabase
+    const { data: callerRoles } = await supabase
       .from("user_roles")
       .select("role")
-      .eq("user_id", callerUid)
-      .eq("role", "admin")
-      .maybeSingle();
+      .eq("user_id", callerUid);
 
-    if (!adminCheck) throw new Error("Not authorized: admin role required");
+    const callerRoleList = (callerRoles || []).map((r: any) => r.role);
+    const isSuperAdmin = callerRoleList.includes("super_admin");
+    const isAdmin = callerRoleList.includes("admin") || isSuperAdmin;
+
+    if (!isAdmin) throw new Error("Not authorized: admin role required");
 
     const { action, ...params } = await req.json();
 
