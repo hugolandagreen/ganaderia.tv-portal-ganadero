@@ -8,6 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { LangProvider } from "@/contexts/LangContext";
 import Navbar from "@/components/Navbar";
 import RadioPlayer from "@/components/RadioPlayer";
+import GlobalTVMiniPlayer from "@/components/GlobalTVMiniPlayer";
 import AdminPanel from "@/components/AdminPanel";
 import Index from "./pages/Index";
 import Noticias from "./pages/Noticias";
@@ -50,6 +51,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
             <RadioPlayer />
+            <GlobalTVMiniPlayer />
           </BrowserRouter>
         </MediaProvider>
         </LangProvider>
