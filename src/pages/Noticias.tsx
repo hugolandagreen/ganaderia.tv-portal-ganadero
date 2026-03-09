@@ -128,42 +128,46 @@ const Noticias = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ delay: i * 0.05, type: "spring", stiffness: 300, damping: 25 }}
-                    className="bg-card rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer border border-border/50 hover:border-primary/20 hover:-translate-y-1"
                   >
-                    <div className="relative h-48 overflow-hidden">
-                      <img
-                        src={news.image_url}
-                        alt={news.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-                      <div className="absolute top-3 left-3">
-                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${badge.classes}`}>
-                          {badge.label}
-                        </span>
+                    <Link
+                      to={`/noticia/${news.id}`}
+                      className="bg-card rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer border border-border/50 hover:border-primary/20 hover:-translate-y-1 block"
+                    >
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={news.image_url}
+                          alt={news.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+                        <div className="absolute top-3 left-3">
+                          <span className={`px-3 py-1 rounded-full text-xs font-bold ${badge.classes}`}>
+                            {badge.label}
+                          </span>
+                        </div>
+                        <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                          <span className="text-2xl drop-shadow-lg">{news.flag}</span>
+                          <span className="text-sm font-semibold text-primary-foreground drop-shadow-md">{news.country}</span>
+                        </div>
                       </div>
-                      <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                        <span className="text-2xl drop-shadow-lg">{news.flag}</span>
-                        <span className="text-sm font-semibold text-primary-foreground drop-shadow-md">{news.country}</span>
-                      </div>
-                    </div>
 
-                    <div className="p-5">
-                      <span className="text-xs font-medium text-muted-foreground">
-                        {new Date(news.published_at).toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" })}
-                      </span>
-                      <h3 className="font-display font-bold text-lg leading-snug mt-1.5 mb-2 text-foreground group-hover:text-primary transition-colors">
-                        {news.title}
-                      </h3>
-                      {news.summary && (
-                        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{news.summary}</p>
-                      )}
-                      <div className="flex items-center gap-1.5 text-sm font-bold text-primary group-hover:gap-3 transition-all">
-                        <span>Leer más</span>
-                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <div className="p-5">
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {new Date(news.published_at).toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" })}
+                        </span>
+                        <h3 className="font-display font-bold text-lg leading-snug mt-1.5 mb-2 text-foreground group-hover:text-primary transition-colors">
+                          {news.title}
+                        </h3>
+                        {news.summary && (
+                          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{news.summary}</p>
+                        )}
+                        <div className="flex items-center gap-1.5 text-sm font-bold text-primary group-hover:gap-3 transition-all">
+                          <span>Leer más</span>
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   </motion.article>
                 );
               })}
