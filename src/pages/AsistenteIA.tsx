@@ -453,14 +453,12 @@ const AsistenteIA = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mb-8"
                 >
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
-                    <Sparkles className="h-8 w-8 text-primary" />
-                  </div>
-                   <h2 className="text-2xl font-bold text-foreground mb-2">
-                    Bienvenido a <span className="text-primary">GanaderIA</span>
+                  <img src={ganaderiaIcon} alt="GanaderIA" className="w-16 h-16 mb-4" />
+                   <h2 className="text-2xl font-display font-extrabold text-foreground mb-2">
+                    Bienvenido a Ganader<span className="text-primary">IA</span>
                   </h2>
                   <p className="text-muted-foreground max-w-md mx-auto">
-                    Soy tu asistente ganadero con inteligencia artificial. Pregúntame sobre precios, razas, nutrición, salud animal y más.
+                    Tu asistente ganadero con inteligencia artificial. Pregúntame sobre precios, razas, nutrición, salud animal y más.
                   </p>
                 </motion.div>
 
