@@ -173,7 +173,6 @@ const NewsSection = () => {
                         <span>{t("news_read_more")}</span>
                         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </div>
-                      </div>
                     </div>
                   </Link>
                 </motion.article>
