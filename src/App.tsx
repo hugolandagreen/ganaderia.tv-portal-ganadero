@@ -52,6 +52,7 @@ const App = () => (
             <RadioPlayer />
           </BrowserRouter>
         </MediaProvider>
+        </LangProvider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
