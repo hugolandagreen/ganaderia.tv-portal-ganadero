@@ -175,7 +175,7 @@ const NewsSection = () => {
             animate={{ opacity: 1 }}
             className="text-center py-16 text-muted-foreground"
           >
-            Newspapere className="h-12 w-12 mx-auto mb-3 opacity-40" />
+            <Newspaper className="h-12 w-12 mx-auto mb-3 opacity-40" />
             <p className="text-lg font-semibold">No hay noticias para estos filtros</p>
             <p className="text-sm">Prueba con otra combinación de país o categoría</p>
           </motion.div>
