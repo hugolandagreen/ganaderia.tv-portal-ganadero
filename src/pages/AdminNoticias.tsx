@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { Trash2, Plus, ArrowLeft, Newspaper, Loader2, Upload, Link2, Image } from "lucide-react";
+import { Trash2, Plus, ArrowLeft, Newspaper, Loader2, Upload, Link2, Image, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const categories = [
@@ -39,6 +39,8 @@ const AdminNoticias = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [summary, setSummary] = useState("");
+  const [content, setContent] = useState("");
+  const [author, setAuthor] = useState("Redacción Ganaderia.TV");
   const [uploading, setUploading] = useState(false);
 
   const isAdmin = user?.email === ADMIN_EMAIL;
@@ -91,6 +93,8 @@ const AdminNoticias = () => {
         flag: selectedCountry?.flag || "🌍",
         image_url: finalImageUrl,
         summary: summary.trim() || null,
+        content: content.trim() || null,
+        author: author.trim() || "Redacción Ganaderia.TV",
         created_by: user?.id || null,
       });
       toast({ title: "Noticia publicada", description: "La noticia se agregó correctamente." });
@@ -99,6 +103,8 @@ const AdminNoticias = () => {
       setImageFile(null);
       setImagePreview(null);
       setSummary("");
+      setContent("");
+      setAuthor("Redacción Ganaderia.TV");
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch {
       toast({ title: "Error", description: "No se pudo publicar la noticia.", variant: "destructive" });
@@ -140,9 +146,9 @@ const AdminNoticias = () => {
       </section>
 
       <section className="py-10">
-        <div className="container mx-auto px-4 grid lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-8">
           {/* Form */}
-          <Card className="lg:col-span-1">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <Plus className="h-5 w-5" /> Nueva Noticia
@@ -155,32 +161,39 @@ const AdminNoticias = () => {
                   <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Título de la noticia" required />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="category">Categoría</Label>
-                  <select
-                    id="category"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    {categories.map((c) => (
-                      <option key={c.value} value={c.value}>{c.label}</option>
-                    ))}
-                  </select>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="category">Categoría</Label>
+                    <select
+                      id="category"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {categories.map((c) => (
+                        <option key={c.value} value={c.value}>{c.label}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="country">País</Label>
+                    <select
+                      id="country"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {countries.map((c) => (
+                        <option key={c.name} value={c.name}>{c.flag} {c.name}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="country">País</Label>
-                  <select
-                    id="country"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    {countries.map((c) => (
-                      <option key={c.name} value={c.name}>{c.flag} {c.name}</option>
-                    ))}
-                  </select>
+                  <Label htmlFor="author">Autor</Label>
+                  <Input id="author" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Nombre del autor" />
                 </div>
 
                 {/* Image mode toggle */}
@@ -247,8 +260,20 @@ const AdminNoticias = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="summary">Resumen</Label>
-                  <Textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Breve descripción..." rows={3} />
+                  <Label htmlFor="summary">Resumen (aparece en la vista previa)</Label>
+                  <Textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Breve descripción de la noticia..." rows={2} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="content">Contenido completo del artículo</Label>
+                  <Textarea 
+                    id="content" 
+                    value={content} 
+                    onChange={(e) => setContent(e.target.value)} 
+                    placeholder="Escribe el artículo completo aquí. Usa saltos de línea para separar párrafos..." 
+                    rows={10}
+                    className="font-sans"
+                  />
                 </div>
 
                 <Button type="submit" className="w-full" disabled={createNews.isPending || uploading}>
@@ -260,7 +285,7 @@ const AdminNoticias = () => {
           </Card>
 
           {/* List */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="space-y-4">
             <h2 className="text-xl font-bold text-foreground">
               Noticias publicadas ({news?.length || 0})
             </h2>
@@ -271,35 +296,48 @@ const AdminNoticias = () => {
               </div>
             )}
 
-            {news?.map((item) => (
-              <Card key={item.id} className="flex flex-col sm:flex-row overflow-hidden">
-                <div className="sm:w-40 h-28 sm:h-auto flex-shrink-0">
-                  <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
-                </div>
-                <CardContent className="flex-1 p-4 flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg">{item.flag}</span>
-                      <span className="text-xs text-muted-foreground">{item.country} · {item.category}</span>
-                    </div>
-                    <h3 className="font-bold text-foreground line-clamp-2">{item.title}</h3>
-                    {item.summary && <p className="text-sm text-muted-foreground line-clamp-1 mt-1">{item.summary}</p>}
-                    <span className="text-xs text-muted-foreground mt-1 block">
-                      {new Date(item.published_at).toLocaleDateString("es-MX")}
-                    </span>
+            <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-2">
+              {news?.map((item) => (
+                <Card key={item.id} className="flex flex-col sm:flex-row overflow-hidden">
+                  <div className="sm:w-32 h-24 sm:h-auto flex-shrink-0">
+                    <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDelete(item.id)}
-                    disabled={deleteNews.isPending}
-                    className="text-destructive hover:text-destructive hover:bg-destructive/10 flex-shrink-0"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+                  <CardContent className="flex-1 p-3 flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-base">{item.flag}</span>
+                        <span className="text-xs text-muted-foreground">{item.country}</span>
+                      </div>
+                      <h3 className="font-bold text-sm text-foreground line-clamp-2">{item.title}</h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(item.published_at).toLocaleDateString("es-MX")}
+                        </span>
+                        {item.content && (
+                          <span className="text-xs text-primary font-medium">• Artículo completo</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <Link to={`/noticia/${item.id}`}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary">
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleDelete(item.id)}
+                        disabled={deleteNews.isPending}
+                        className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
 
             {!isLoading && news?.length === 0 && (
               <div className="text-center py-12 text-muted-foreground">
