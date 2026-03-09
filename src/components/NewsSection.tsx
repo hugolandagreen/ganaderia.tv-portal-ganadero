@@ -2,9 +2,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Milk, Beef, ArrowRight, Newspaper, Loader2, Target } from "lucide-react";
 import { Link } from "react-router-dom";
-import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
+import { countries, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
 import ReaderCount from "@/components/ReaderCount";
+import { useLang } from "@/contexts/LangContext";
 
 const categoryIcons: Record<Category, React.ReactNode> = {
   lechero: <Milk className="h-5 w-5" />,
@@ -16,6 +17,13 @@ const NewsSection = () => {
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
   const [activeCountry, setActiveCountry] = useState<string | null>(null);
   const { data: newsData, isLoading } = useNews();
+  const { t } = useLang();
+
+  const categoryFilters = [
+    { key: "lechero" as Category, label: t("cat_lechero"), color: "from-pasture to-emerald-600" },
+    { key: "carne" as Category, label: t("cat_carne"), color: "from-accent to-gold-light" },
+    { key: "doble_proposito" as Category, label: t("cat_doble_proposito"), color: "from-primary to-burgundy-light" },
+  ];
 
   const filtered = (newsData || [])
     .filter((n) => {
@@ -39,13 +47,13 @@ const NewsSection = () => {
         >
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
             <Newspaper className="h-4 w-4" />
-            Últimas noticias
+            {t("news_latest")}
           </div>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-3">
-            Noticias <span className="text-gradient-gold">Ganaderas</span>
+            {t("news_title")} <span className="text-gradient-gold">{t("news_title_highlight")}</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Información actualizada del sector ganadero mundial
+            {t("news_subtitle")}
           </p>
         </motion.div>
 
@@ -162,7 +170,7 @@ const NewsSection = () => {
                         {news.title}
                       </h3>
                       <div className="flex items-center gap-1.5 text-sm font-bold text-primary group-hover:gap-3 transition-all">
-                        <span>Leer más</span>
+                        <span>{t("news_read_more")}</span>
                         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </div>
                     </div>
@@ -180,8 +188,8 @@ const NewsSection = () => {
             className="text-center py-16 text-muted-foreground"
           >
             <Newspaper className="h-12 w-12 mx-auto mb-3 opacity-40" />
-            <p className="text-lg font-semibold">No hay noticias para estos filtros</p>
-            <p className="text-sm">Prueba con otra combinación de país o categoría</p>
+            <p className="text-lg font-semibold">{t("news_no_results")}</p>
+            <p className="text-sm">{t("news_try_another")}</p>
           </motion.div>
         )}
 
@@ -195,7 +203,7 @@ const NewsSection = () => {
             to="/noticias"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
           >
-            Ver todas las noticias
+            {t("news_view_all")}
             <ArrowRight className="h-5 w-5" />
           </Link>
         </motion.div>

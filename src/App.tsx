@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MediaProvider } from "@/hooks/useRadioPlayer";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { LangProvider } from "@/contexts/LangContext";
 import Navbar from "@/components/Navbar";
 import RadioPlayer from "@/components/RadioPlayer";
 import AdminPanel from "@/components/AdminPanel";
@@ -27,6 +28,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
+        <LangProvider>
         <MediaProvider>
           <Toaster />
           <Sonner />
@@ -50,6 +52,7 @@ const App = () => (
             <RadioPlayer />
           </BrowserRouter>
         </MediaProvider>
+        </LangProvider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
