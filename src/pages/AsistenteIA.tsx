@@ -419,7 +419,7 @@ const AsistenteIA = () => {
         <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
           <div className="border-b border-border bg-card px-4 py-3 flex items-center gap-3">
-            <img src={ganaderiaIcon} alt="GanaderIA" className="h-8 w-8 object-contain" />
+            <img src={ganaderiaIcon} alt="GanaderIA" className="h-8 w-8 object-contain object-contain" />
             <div className="flex-1">
               <h1 className="text-lg font-display font-extrabold text-foreground leading-none">Ganader<span className="text-primary">IA</span></h1>
               <p className="text-[10px] text-muted-foreground font-medium tracking-wider uppercase">Asistente Ganadero con IA</p>
@@ -453,7 +453,7 @@ const AsistenteIA = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mb-8"
                 >
-                  <img src={ganaderiaIcon} alt="GanaderIA" className="w-16 h-16 mb-4" />
+                  <img src={ganaderiaIcon} alt="GanaderIA" className= object-contain"w-16 h-16 mb-4" />
                    <h2 className="text-2xl font-display font-extrabold text-foreground mb-2">
                     Bienvenido a Ganader<span className="text-primary">IA</span>
                   </h2>
