@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Noticias", href: "/#noticias" },
   { label: "Programación", href: "/#programacion" },
   { label: "Artículos", href: "/#articulos" },
-  { label: "GanaderIA", href: "/asistente-ia" },
+  { label: "Ganader, href: "/asistente-ia" },
 ];
 
 const Navbar = () => {
@@ -180,7 +180,7 @@ const Navbar = () => {
                     <span className="h-2 w-2 rounded-full bg-destructive animate-pulse-live" />
                   )}
                   {link.label}
-                  {link.label === "Asistente IA" && <Bot className="h-4 w-4 text-primary" />}
+                  {link.label === "AsiGanader && <Bot className="h-4 w-4 text-primary" />}
                 </a>
               ))}
               {/* Mobile auth */}

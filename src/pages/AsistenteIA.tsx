@@ -507,7 +507,7 @@ const AsistenteIA = () => {
                           <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-bold">$9.99/mes</span>
                         </div>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Asesoría personalizada con IA para llevar tu ganadería al siguiente nivel
+                          Desbloquea todo el poder de GanaderIA para llevar tu ganadería al siguiente nivel
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                           {proFeatures.slice(0, 4).map((f, i) => (
