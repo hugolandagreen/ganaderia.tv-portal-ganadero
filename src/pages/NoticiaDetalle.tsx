@@ -135,15 +135,13 @@ const NoticiaDetalle = () => {
                   <Clock className="h-4 w-4" />
                   <span>{readTime} min de lectura</span>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleShare}
-                  className="ml-auto"
-                >
-                  <Share2 className="h-4 w-4 mr-1" />
-                  Compartir
-                </Button>
+                <ReaderCount id={news.id} publishedAt={news.published_at} size="md" />
+              </div>
+
+              {/* Social share */}
+              <div className="flex items-center gap-3 mb-8 pb-8 border-b border-border">
+                <span className="text-sm font-semibold text-foreground">Compartir:</span>
+                <SocialShare title={news.title} text={news.summary || ""} size="md" />
               </div>
 
               {/* Summary */}
