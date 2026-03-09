@@ -1,6 +1,6 @@
 import expoGanaderaImg from "@/assets/expo-ganadera-jalisco.jpg";
 
-export type Category = "global" | "lechero" | "carne";
+export type Category = "lechero" | "carne" | "doble_proposito";
 
 export interface NewsItem {
   id: number;
