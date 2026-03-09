@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Milk, Beef, ArrowRight, ArrowLeft, Newspaper, Loader2, Target } from "lucide-react";
 import { Link } from "react-router-dom";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
