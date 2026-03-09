@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Milk, Beef, ArrowRight, Newspaper, Loader2 } from "lucide-react";
+import { Milk, Beef, ArrowRight, Newspaper, Loader2, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
 
 const categoryIcons: Record<Category, React.ReactNode> = {
-  global: <Globe className="h-5 w-5" />,
   lechero: <Milk className="h-5 w-5" />,
   carne: <Beef className="h-5 w-5" />,
+  doble_proposito: <Target className="h-5 w-5" />,
 };
 
 const NewsSection = () => {
