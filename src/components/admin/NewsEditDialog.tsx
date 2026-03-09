@@ -12,9 +12,9 @@ import { useUpdateNews, type NewsRow } from "@/hooks/useNews";
 import { countries } from "@/data/news";
 
 const categories = [
-  { value: "global", label: "Global" },
   { value: "lechero", label: "Ganado Lechero" },
   { value: "carne", label: "Ganado de Carne" },
+  { value: "doble_proposito", label: "Ganado Doble Propósito" },
 ];
 
 interface Props {

@@ -35,7 +35,7 @@ const AdminNoticias = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("global");
+  const [category, setCategory] = useState("lechero");
   const [country, setCountry] = useState("México");
   const [imageUrl, setImageUrl] = useState("");
   const [imageMode, setImageMode] = useState<"upload" | "url">("upload");

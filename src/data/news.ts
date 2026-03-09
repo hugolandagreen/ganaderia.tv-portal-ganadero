@@ -47,13 +47,13 @@ export const newsItems: NewsItem[] = [
 ];
 
 export const categoryFilters = [
-  { key: "global" as Category, label: "Todas", color: "from-primary to-burgundy-light" },
   { key: "lechero" as Category, label: "Ganado Lechero", color: "from-pasture to-emerald-600" },
   { key: "carne" as Category, label: "Ganado de Carne", color: "from-accent to-gold-light" },
+  { key: "doble_proposito" as Category, label: "Ganado Doble Propósito", color: "from-primary to-burgundy-light" },
 ];
 
 export const categoryBadge: Record<Category, { label: string; classes: string }> = {
-  global: { label: "Global", classes: "bg-card text-primary font-bold shadow-sm" },
   lechero: { label: "Lechero", classes: "bg-card text-pasture font-bold shadow-sm" },
   carne: { label: "Carne", classes: "bg-card text-primary font-bold shadow-sm" },
+  doble_proposito: { label: "Doble Propósito", classes: "bg-card text-accent font-bold shadow-sm" },
 };

@@ -18,7 +18,7 @@ const NewsSection = () => {
 
   const filtered = (newsData || [])
     .filter((n) => {
-      if (activeCategory && activeCategory !== "global" && n.category !== activeCategory) return false;
+      if (activeCategory && n.category !== activeCategory) return false;
       if (activeCountry && n.country !== activeCountry) return false;
       return true;
     })
