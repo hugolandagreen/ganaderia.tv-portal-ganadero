@@ -74,6 +74,15 @@ const suggestionCategories = [
   },
 ];
 
+const proFeatures = [
+  { icon: Brain, text: "Asesoría personalizada según tu ganado y región" },
+  { icon: TrendingUp, text: "Análisis de mercados y precios en tiempo real" },
+  { icon: Leaf, text: "Planes de nutrición y manejo de pasturas" },
+  { icon: Shield, text: "Protocolos sanitarios y prevención" },
+  { icon: Zap, text: "Consultas ilimitadas sin restricciones" },
+  { icon: DollarSign, text: "Gestión financiera y costos de producción" },
+];
+
 async function streamChat({
   messages,
   onDelta,
