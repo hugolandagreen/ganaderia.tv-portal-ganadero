@@ -204,7 +204,7 @@ const NewsSection = () => {
             to="/noticias"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
           >
-            Ver todas las noticias
+            {t("news_view_all")}
             <ArrowRight className="h-5 w-5" />
           </Link>
         </motion.div>
