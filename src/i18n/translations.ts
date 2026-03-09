@@ -66,6 +66,11 @@ export const translations = {
     ],
   },
 
+  // News page
+  news_page_title: { es: "Noticias", pt: "Notícias" },
+  news_page_highlight: { es: "Ganaderas", pt: "Pecuárias" },
+  news_page_subtitle: { es: "Toda la información actualizada del sector ganadero en Latinoamérica y el mundo", pt: "Todas as informações atualizadas do setor pecuário na América Latina e no mundo" },
+
   // Articles
   articles_title: { es: "Artículos Destacados", pt: "Artigos em Destaque" },
   articles_subtitle: { es: "Contenido especializado para el ganadero moderno", pt: "Conteúdo especializado para o pecuarista moderno" },
