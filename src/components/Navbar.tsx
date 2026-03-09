@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Noticias", href: "/#noticias" },
   { label: "Programación", href: "/#programacion" },
   { label: "Artículos", href: "/#articulos" },
-  { label: "Asistente IA", href: "/#ia" },
+  { label: "Asistente IA", href: "/asistente-ia" },
   { label: "Pro", href: "/#pro" },
 ];
 
@@ -25,6 +25,12 @@ const Navbar = () => {
 
   const handleNavClick = useCallback((e: React.MouseEvent, href: string) => {
     e.preventDefault();
+    // Direct page links (not hash-based)
+    if (!href.includes("#")) {
+      navigate(href);
+      setOpen(false);
+      return;
+    }
     const [path, hash] = href.split("#");
     if (location.pathname !== "/") {
       navigate("/" + (hash ? "#" + hash : ""));

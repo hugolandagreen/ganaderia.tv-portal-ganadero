@@ -6,7 +6,6 @@ import HeroLive from "@/components/HeroLive";
 import NewsSection from "@/components/NewsSection";
 import ProgrammingSection from "@/components/ProgrammingSection";
 import ArticlesSection from "@/components/ArticlesSection";
-import AiAssistant from "@/components/AiAssistant";
 import ProSection from "@/components/ProSection";
 import Footer from "@/components/Footer";
 import RadioPlayer from "@/components/RadioPlayer";
@@ -29,7 +28,6 @@ const Index = () => {
       <NewsSection />
       <ProgrammingSection />
       <ArticlesSection />
-      <AiAssistant />
       <ProSection />
       <Footer />
       <RadioPlayer />
