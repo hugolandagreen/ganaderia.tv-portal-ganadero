@@ -68,7 +68,7 @@ const Navbar = () => {
               ) : link.label === "GanaderIA_NAV" ? (
                 <span className="flex flex-col items-center leading-none gap-0.5">
                   <span className="flex items-center gap-1">
-                    <Bot className="h-3.5 w-3.5 text-primary" />
+                    <img src={ganaderiaIcon} alt="" className="h-5 w-5" />
                     <span className="font-display font-extrabold text-primary tracking-tight normal-case">
                       Ganader<span className="text-accent">IA</span>
                     </span>
