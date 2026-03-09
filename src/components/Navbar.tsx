@@ -66,14 +66,14 @@ const Navbar = () => {
                   {link.label}
                 </span>
               ) : link.label === "GanaderIA_NAV" ? (
-                <span className="flex flex-col items-center leading-none gap-0.5">
-                  <span className="flex items-center gap-1">
-                    <img src={ganaderiaIcon} alt="" className="h-5 w-5" />
-                    <span className="font-display font-extrabold text-primary tracking-tight normal-case">
+                <span className="flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-1.5">
+                  <img src={ganaderiaIcon} alt="" className="h-7 w-7" />
+                  <span className="flex flex-col leading-none gap-0.5">
+                    <span className="font-display font-extrabold text-primary tracking-tight normal-case text-base">
                       Ganader<span className="text-accent">IA</span>
                     </span>
+                    <span className="text-[10px] text-muted-foreground font-semibold tracking-wider uppercase">Asistente IA</span>
                   </span>
-                  <span className="text-[9px] text-muted-foreground font-medium tracking-wider uppercase">Asistente IA</span>
                 </span>
               ) : (
                 link.label
