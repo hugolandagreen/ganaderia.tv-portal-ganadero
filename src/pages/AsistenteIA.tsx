@@ -454,8 +454,8 @@ const AsistenteIA = () => {
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
                     <Sparkles className="h-8 w-8 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground mb-2">
-                    ¿En qué te puedo ayudar hoy?
+                   <h2 className="text-2xl font-bold text-foreground mb-2">
+                    Bienvenido a <span className="text-primary">GanaderIA</span>
                   </h2>
                   <p className="text-muted-foreground max-w-md mx-auto">
                     Soy tu asistente ganadero con inteligencia artificial. Pregúntame sobre precios, razas, nutrición, salud animal y más.
