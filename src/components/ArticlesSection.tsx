@@ -1,14 +1,29 @@
 import { motion } from "framer-motion";
-import { BookOpen, Dna, Target, TrendingUp } from "lucide-react";
+import { BookOpen, Dna, Target, TrendingUp, Leaf, Heart, Globe } from "lucide-react";
+import { useArticles } from "@/hooks/useArticles";
 
-const articles = [
-  { icon: <Dna className="h-7 w-7" />, title: "Genética Bovina Avanzada", desc: "Cómo seleccionar los mejores reproductores para maximizar la producción y calidad genética de tu hato.", tag: "Genética" },
-  { icon: <Target className="h-7 w-7" />, title: "Selección de Semental", desc: "Guía completa para evaluar DEPs, conformación y linaje al elegir el semental ideal para tu ganadería.", tag: "Reproducción" },
-  { icon: <TrendingUp className="h-7 w-7" />, title: "Mercados Ganaderos 2026", desc: "Análisis de tendencias de precios, demanda global y oportunidades para ganaderos latinoamericanos.", tag: "Mercados" },
-  { icon: <BookOpen className="h-7 w-7" />, title: "Ganadería Sostenible", desc: "Prácticas regenerativas que mejoran la productividad mientras cuidan el medio ambiente y el bienestar animal.", tag: "Sostenibilidad" },
+const iconMap: Record<string, React.ReactNode> = {
+  BookOpen: <BookOpen className="h-7 w-7" />,
+  Dna: <Dna className="h-7 w-7" />,
+  Target: <Target className="h-7 w-7" />,
+  TrendingUp: <TrendingUp className="h-7 w-7" />,
+  Leaf: <Leaf className="h-7 w-7" />,
+  Heart: <Heart className="h-7 w-7" />,
+  Globe: <Globe className="h-7 w-7" />,
+};
+
+// Fallback articles when DB is empty
+const fallbackArticles = [
+  { icon: "Dna", title: "Genética Bovina Avanzada", description: "Cómo seleccionar los mejores reproductores para maximizar la producción y calidad genética de tu hato.", tag: "Genética" },
+  { icon: "Target", title: "Selección de Semental", description: "Guía completa para evaluar DEPs, conformación y linaje al elegir el semental ideal para tu ganadería.", tag: "Reproducción" },
+  { icon: "TrendingUp", title: "Mercados Ganaderos 2026", description: "Análisis de tendencias de precios, demanda global y oportunidades para ganaderos latinoamericanos.", tag: "Mercados" },
+  { icon: "BookOpen", title: "Ganadería Sostenible", description: "Prácticas regenerativas que mejoran la productividad mientras cuidan el medio ambiente y el bienestar animal.", tag: "Sostenibilidad" },
 ];
 
 const ArticlesSection = () => {
+  const { data: articles } = useArticles();
+  const displayArticles = articles?.length ? articles : fallbackArticles;
+
   return (
     <section id="articulos" className="py-16 bg-muted">
       <div className="container mx-auto px-4">
@@ -27,7 +42,7 @@ const ArticlesSection = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {articles.map((article, i) => (
+          {displayArticles.map((article, i) => (
             <motion.div
               key={article.title}
               initial={{ opacity: 0, y: 20 }}
@@ -38,7 +53,7 @@ const ArticlesSection = () => {
             >
               <div className="flex items-start gap-4">
                 <div className="h-14 w-14 rounded-xl bg-muted flex items-center justify-center text-primary shrink-0">
-                  {article.icon}
+                  {iconMap[article.icon] || <BookOpen className="h-7 w-7" />}
                 </div>
                 <div>
                   <span className="text-xs font-bold text-accent uppercase tracking-wider">
@@ -48,7 +63,7 @@ const ArticlesSection = () => {
                     {article.title}
                   </h3>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    {article.desc}
+                    {article.description}
                   </p>
                 </div>
               </div>
