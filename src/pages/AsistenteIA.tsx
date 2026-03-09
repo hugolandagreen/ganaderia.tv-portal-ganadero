@@ -164,9 +164,10 @@ async function streamChat({
 }
 
 const AsistenteIA = () => {
-  const { user, isPro } = useAuth();
+  const { user, isPro, subscription } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [proLoading, setProLoading] = useState(false);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
