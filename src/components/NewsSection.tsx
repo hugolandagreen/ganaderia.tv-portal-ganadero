@@ -17,6 +17,13 @@ const NewsSection = () => {
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
   const [activeCountry, setActiveCountry] = useState<string | null>(null);
   const { data: newsData, isLoading } = useNews();
+  const { t } = useLang();
+
+  const categoryFilters = [
+    { key: "lechero" as Category, label: t("cat_lechero"), color: "from-pasture to-emerald-600" },
+    { key: "carne" as Category, label: t("cat_carne"), color: "from-accent to-gold-light" },
+    { key: "doble_proposito" as Category, label: t("cat_doble_proposito"), color: "from-primary to-burgundy-light" },
+  ];
 
   const filtered = (newsData || [])
     .filter((n) => {
