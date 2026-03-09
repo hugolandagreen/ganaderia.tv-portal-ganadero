@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { useTVPlayer, useMediaPlayer } from "@/hooks/useRadioPlayer";
 import logo from "@/assets/logo-ganaderia-tv.png";
+import AdBanner from "@/components/AdBanner";
 import { useLang } from "@/contexts/LangContext";
 
 const HeroLive = () => {
@@ -240,17 +241,37 @@ const HeroLive = () => {
 
       {/* Branding strip */}
       <div className="bg-gradient-burgundy py-3 sm:py-5">
-        <div className="container mx-auto px-3 sm:px-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 md:gap-6 bg-primary-foreground rounded-lg sm:rounded-none p-3 sm:p-0">
-          <div className="bg-white rounded-xl p-1.5 sm:p-2">
+        <div className="container mx-auto px-3 sm:px-4 flex flex-col lg:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 bg-primary-foreground rounded-lg sm:rounded-none p-3 sm:p-0">
+          {/* Sponsor left */}
+          <div className="hidden lg:block shrink-0 w-[200px]">
+            <AdBanner placement="hero_sponsor_left" variant="sponsor_square" />
+          </div>
+
+          <div className="bg-white rounded-xl p-1.5 sm:p-2 shrink-0">
             <img src={logo} alt="Ganaderia.TV" className="h-16 sm:h-20 md:h-36 w-auto object-contain" />
           </div>
-          <div className="text-center sm:text-left">
+          <div className="text-center sm:text-left flex-1 min-w-0">
             <h1 className="text-base sm:text-lg md:text-2xl font-display font-bold text-primary">
               {t("hero_tagline")}
             </h1>
             <p className="text-xs sm:text-sm md:text-base text-primary">
               {t("hero_subtitle")}
             </p>
+          </div>
+
+          {/* Sponsor right */}
+          <div className="hidden lg:block shrink-0 w-[200px]">
+            <AdBanner placement="hero_sponsor_right" variant="sponsor_square" />
+          </div>
+
+          {/* Mobile: both sponsors in a row */}
+          <div className="flex lg:hidden gap-3 w-full">
+            <div className="flex-1">
+              <AdBanner placement="hero_sponsor_left" variant="sponsor_square" />
+            </div>
+            <div className="flex-1">
+              <AdBanner placement="hero_sponsor_right" variant="sponsor_square" />
+            </div>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { useLang } from "@/contexts/LangContext";
 
 interface AdBannerProps {
   placement: AdPlacement | AdPlacement[];
-  variant?: "banner" | "inline" | "sidebar" | "leaderboard";
+  variant?: "banner" | "inline" | "sidebar" | "leaderboard" | "sponsor_square";
   className?: string;
 }
 
@@ -108,6 +108,22 @@ const AdBanner = ({ placement, variant = "banner", className = "" }: AdBannerPro
                 />
               </a>
             )}
+
+            {variant === "sponsor_square" && (
+              <a
+                href={formatUrl(sponsor.link_url)}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="block relative overflow-hidden rounded-xl group hover:shadow-lg transition-all"
+              >
+                <img
+                  src={sponsor.image_url}
+                  alt={sponsor.name}
+                  className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-500 rounded-xl"
+                  loading="lazy"
+                />
+              </a>
+            )}
           </motion.div>
         ))}
       </div>
@@ -194,6 +210,17 @@ const AdBanner = ({ placement, variant = "banner", className = "" }: AdBannerPro
           <Megaphone className="h-4 w-4 text-primary" />
           <span className="text-sm font-bold text-foreground">{txt.title}</span>
           <span className="text-xs text-muted-foreground hidden sm:inline">— publicidad@ganaderia.tv</span>
+        </a>
+      )}
+
+      {variant === "sponsor_square" && (
+        <a
+          href="mailto:publicidad@ganaderia.tv"
+          className="flex flex-col items-center justify-center aspect-square rounded-xl border-2 border-dashed border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors p-3 text-center"
+        >
+          <Megaphone className="h-6 w-6 text-primary mb-1.5" />
+          <p className="text-[11px] font-bold text-foreground leading-tight">{txt.title}</p>
+          <p className="text-[9px] text-muted-foreground mt-0.5">{txt.cta}</p>
         </a>
       )}
     </motion.div>

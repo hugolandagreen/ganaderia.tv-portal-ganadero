@@ -32,6 +32,8 @@ const PLACEMENTS: PlacementInfo[] = [
   { value: "articles_inline", label: "📝 Artículos — inline inferior", dimensions: "600 × 150 px", description: "Banner compacto horizontal entre tarjetas" },
   { value: "detail_after_content", label: "📄 Detalle — después del contenido", dimensions: "800 × 200 px", description: "Banner mediano al final de noticias/artículos" },
   { value: "assistant_sidebar", label: "🤖 Asistente IA — sidebar", dimensions: "300 × 250 px", description: "Banner cuadrado/vertical en el sidebar del asistente" },
+  { value: "hero_sponsor_left", label: "🎬 Hero — patrocinador izquierdo", dimensions: "250 × 250 px", description: "Cuadro de patrocinador a la izquierda del logo en la franja del hero" },
+  { value: "hero_sponsor_right", label: "🎬 Hero — patrocinador derecho", dimensions: "250 × 250 px", description: "Cuadro de patrocinador a la derecha de los títulos en la franja del hero" },
 ];
 
 type SponsorForm = {
