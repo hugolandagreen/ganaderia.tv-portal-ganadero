@@ -162,6 +162,11 @@ const ArticuloDetalle = () => {
                 </p>
               )}
             </div>
+
+            {/* Ad after content */}
+            <div className="mt-8">
+              <AdBanner placement="detail_after_content" variant="banner" />
+            </div>
           </motion.article>
         </div>
       </section>
