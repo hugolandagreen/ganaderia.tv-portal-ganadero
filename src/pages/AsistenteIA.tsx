@@ -420,7 +420,7 @@ const AsistenteIA = () => {
           <div className="border-b border-border bg-card px-4 py-3 flex items-center gap-3">
             <Bot className="h-6 w-6 text-primary" />
             <div className="flex-1">
-              <h1 className="text-lg font-bold text-foreground">Asistente Ganadero IA</h1>
+              <h1 className="text-lg font-bold text-foreground">GanaderIA</h1>
               <p className="text-xs text-muted-foreground">
                 {isPro
                   ? "Consultas ilimitadas • Asesoría personalizada"
