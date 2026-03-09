@@ -8,6 +8,7 @@ import { PRO_PRICE_ID } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import RadioPlayer from "@/components/RadioPlayer";
+import ganaderiaIcon from "@/assets/ganaderia-icon.png";
 
 type Message = { role: "user" | "assistant"; content: string };
 
