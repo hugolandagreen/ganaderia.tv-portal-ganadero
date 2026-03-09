@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNews, useCreateNews, useDeleteNews } from "@/hooks/useNews";
+import { useNews, useCreateNews } from "@/hooks/useNews";
+import type { NewsRow } from "@/hooks/useNews";
 import { countries } from "@/data/news";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
@@ -12,8 +13,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { Trash2, Plus, ArrowLeft, Newspaper, Loader2, Upload, Link2, Image, Eye } from "lucide-react";
+import { Plus, ArrowLeft, Newspaper, Loader2, Upload, Link2, Image } from "lucide-react";
 import { Link } from "react-router-dom";
+import DraggableNewsList from "@/components/admin/DraggableNewsList";
+import NewsEditDialog from "@/components/admin/NewsEditDialog";
 
 const categories = [
   { value: "global", label: "Global" },
@@ -28,7 +31,6 @@ const AdminNoticias = () => {
   const navigate = useNavigate();
   const { data: news, isLoading } = useNews();
   const createNews = useCreateNews();
-  const deleteNews = useDeleteNews();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState("");
@@ -42,6 +44,7 @@ const AdminNoticias = () => {
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("Redacción Ganaderia.TV");
   const [uploading, setUploading] = useState(false);
+  const [editingNews, setEditingNews] = useState<NewsRow | null>(null);
 
   const isAdmin = user?.email === ADMIN_EMAIL;
 
@@ -113,15 +116,6 @@ const AdminNoticias = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteNews.mutateAsync(id);
-      toast({ title: "Eliminada", description: "La noticia fue eliminada." });
-    } catch {
-      toast({ title: "Error", description: "No se pudo eliminar la noticia.", variant: "destructive" });
-    }
-  };
-
   if (authLoading) return null;
 
   return (
@@ -141,7 +135,7 @@ const AdminNoticias = () => {
               Administrar <span className="text-gradient-gold">Noticias</span>
             </h1>
           </div>
-          <p className="text-muted-foreground">Publica y gestiona las noticias ganaderas</p>
+          <p className="text-muted-foreground">Publica y gestiona las noticias ganaderas • Arrastra para reordenar</p>
         </div>
       </section>
 
@@ -164,29 +158,16 @@ const AdminNoticias = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="category">Categoría</Label>
-                    <select
-                      id="category"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      {categories.map((c) => (
-                        <option key={c.value} value={c.value}>{c.label}</option>
-                      ))}
+                    <select id="category" value={category} onChange={(e) => setCategory(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                      {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                     </select>
                   </div>
-
                   <div className="space-y-2">
                     <Label htmlFor="country">País</Label>
-                    <select
-                      id="country"
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      {countries.map((c) => (
-                        <option key={c.name} value={c.name}>{c.flag} {c.name}</option>
-                      ))}
+                    <select id="country" value={country} onChange={(e) => setCountry(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                      {countries.map((c) => <option key={c.name} value={c.name}>{c.flag} {c.name}</option>)}
                     </select>
                   </div>
                 </div>
@@ -200,36 +181,19 @@ const AdminNoticias = () => {
                 <div className="space-y-2">
                   <Label>Imagen</Label>
                   <div className="flex gap-1 rounded-lg border border-input p-1">
-                    <button
-                      type="button"
-                      onClick={() => setImageMode("upload")}
-                      className={`flex-1 flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                        imageMode === "upload"
-                          ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
+                    <button type="button" onClick={() => setImageMode("upload")}
+                      className={`flex-1 flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${imageMode === "upload" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
                       <Upload className="h-3.5 w-3.5" /> Subir
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setImageMode("url")}
-                      className={`flex-1 flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                        imageMode === "url"
-                          ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
+                    <button type="button" onClick={() => setImageMode("url")}
+                      className={`flex-1 flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${imageMode === "url" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
                       <Link2 className="h-3.5 w-3.5" /> URL
                     </button>
                   </div>
-
                   {imageMode === "upload" ? (
                     <div className="space-y-2">
-                      <div
-                        onClick={() => fileInputRef.current?.click()}
-                        className="border-2 border-dashed border-input rounded-lg p-4 text-center cursor-pointer hover:border-primary/50 transition-colors"
-                      >
+                      <div onClick={() => fileInputRef.current?.click()}
+                        className="border-2 border-dashed border-input rounded-lg p-4 text-center cursor-pointer hover:border-primary/50 transition-colors">
                         {imagePreview ? (
                           <img src={imagePreview} alt="Preview" className="w-full h-32 object-cover rounded-md" />
                         ) : (
@@ -239,41 +203,22 @@ const AdminNoticias = () => {
                           </div>
                         )}
                       </div>
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className="hidden"
-                      />
-                      {imageFile && (
-                        <p className="text-xs text-muted-foreground truncate">{imageFile.name}</p>
-                      )}
+                      <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                      {imageFile && <p className="text-xs text-muted-foreground truncate">{imageFile.name}</p>}
                     </div>
                   ) : (
-                    <Input
-                      value={imageUrl}
-                      onChange={(e) => setImageUrl(e.target.value)}
-                      placeholder="https://..."
-                    />
+                    <Input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://..." />
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="summary">Resumen (aparece en la vista previa)</Label>
-                  <Textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Breve descripción de la noticia..." rows={2} />
+                  <Label htmlFor="summary">Resumen</Label>
+                  <Textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Breve descripción..." rows={2} />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="content">Contenido completo del artículo</Label>
-                  <Textarea 
-                    id="content" 
-                    value={content} 
-                    onChange={(e) => setContent(e.target.value)} 
-                    placeholder="Escribe el artículo completo aquí. Usa saltos de línea para separar párrafos..." 
-                    rows={10}
-                    className="font-sans"
-                  />
+                  <Label htmlFor="content">Contenido completo</Label>
+                  <Textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} placeholder="Escribe el artículo completo..." rows={10} />
                 </div>
 
                 <Button type="submit" className="w-full" disabled={createNews.isPending || uploading}>
@@ -289,66 +234,20 @@ const AdminNoticias = () => {
             <h2 className="text-xl font-bold text-foreground">
               Noticias publicadas ({news?.length || 0})
             </h2>
-
-            {isLoading && (
-              <div className="flex justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
-            )}
-
-            <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-2">
-              {news?.map((item) => (
-                <Card key={item.id} className="flex flex-col sm:flex-row overflow-hidden">
-                  <div className="sm:w-32 h-24 sm:h-auto flex-shrink-0">
-                    <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
-                  </div>
-                  <CardContent className="flex-1 p-3 flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-base">{item.flag}</span>
-                        <span className="text-xs text-muted-foreground">{item.country}</span>
-                      </div>
-                      <h3 className="font-bold text-sm text-foreground line-clamp-2">{item.title}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(item.published_at).toLocaleDateString("es-MX")}
-                        </span>
-                        {item.content && (
-                          <span className="text-xs text-primary font-medium">• Artículo completo</span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <Link to={`/noticia/${item.id}`}>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                      </Link>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDelete(item.id)}
-                        disabled={deleteNews.isPending}
-                        className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {!isLoading && news?.length === 0 && (
-              <div className="text-center py-12 text-muted-foreground">
-                <Newspaper className="h-10 w-10 mx-auto mb-3 opacity-40" />
-                <p className="font-semibold">No hay noticias aún</p>
-                <p className="text-sm">Publica tu primera noticia con el formulario</p>
-              </div>
-            )}
+            <DraggableNewsList
+              news={news || []}
+              isLoading={isLoading}
+              onEdit={(item) => setEditingNews(item)}
+            />
           </div>
         </div>
       </section>
+
+      <NewsEditDialog
+        news={editingNews}
+        open={!!editingNews}
+        onOpenChange={(open) => { if (!open) setEditingNews(null); }}
+      />
 
       <Footer />
     </main>
