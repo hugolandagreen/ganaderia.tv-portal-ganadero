@@ -15,14 +15,22 @@ export interface NewsItem {
 
 export const countries = [
   { name: "Argentina", flag: "🇦🇷" },
+  { name: "Belice", flag: "🇧🇿" },
   { name: "Brasil", flag: "🇧🇷" },
-  { name: "Colombia", flag: "🇨🇴" },
-  { name: "México", flag: "🇲🇽" },
-  { name: "Uruguay", flag: "🇺🇾" },
-  { name: "Paraguay", flag: "🇵🇾" },
   { name: "Chile", flag: "🇨🇱" },
+  { name: "Colombia", flag: "🇨🇴" },
+  { name: "Costa Rica", flag: "🇨🇷" },
+  { name: "El Salvador", flag: "🇸🇻" },
   { name: "España", flag: "🇪🇸" },
+  { name: "Guatemala", flag: "🇬🇹" },
+  { name: "Honduras", flag: "🇭🇳" },
+  { name: "México", flag: "🇲🇽" },
+  { name: "Nicaragua", flag: "🇳🇮" },
+  { name: "Panamá", flag: "🇵🇦" },
+  { name: "Paraguay", flag: "🇵🇾" },
   { name: "Perú", flag: "🇵🇪" },
+  { name: "República Dominicana", flag: "🇩🇴" },
+  { name: "Uruguay", flag: "🇺🇾" },
   { name: "Venezuela", flag: "🇻🇪" },
 ];
 

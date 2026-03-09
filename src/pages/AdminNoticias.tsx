@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNews, useCreateNews, useDeleteNews } from "@/hooks/useNews";
 import { countries } from "@/data/news";
+import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { Trash2, Plus, ArrowLeft, Newspaper, Loader2 } from "lucide-react";
+import { Trash2, Plus, ArrowLeft, Newspaper, Loader2, Upload, Link2, Image } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const categories = [
@@ -28,12 +29,17 @@ const AdminNoticias = () => {
   const { data: news, isLoading } = useNews();
   const createNews = useCreateNews();
   const deleteNews = useDeleteNews();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("global");
   const [country, setCountry] = useState("México");
   const [imageUrl, setImageUrl] = useState("");
+  const [imageMode, setImageMode] = useState<"upload" | "url">("upload");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [summary, setSummary] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const isAdmin = user?.email === ADMIN_EMAIL;
 
@@ -44,26 +50,60 @@ const AdminNoticias = () => {
 
   const selectedCountry = countries.find((c) => c.name === country);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Error", description: "Solo se permiten imágenes.", variant: "destructive" });
+      return;
+    }
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const uploadImage = async (file: File): Promise<string> => {
+    const ext = file.name.split(".").pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${ext}`;
+    const { error } = await supabase.storage.from("news-images").upload(fileName, file);
+    if (error) throw error;
+    const { data } = supabase.storage.from("news-images").getPublicUrl(fileName);
+    return data.publicUrl;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
 
     try {
+      setUploading(true);
+      let finalImageUrl = "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=600&h=350&fit=crop";
+
+      if (imageMode === "upload" && imageFile) {
+        finalImageUrl = await uploadImage(imageFile);
+      } else if (imageMode === "url" && imageUrl.trim()) {
+        finalImageUrl = imageUrl.trim();
+      }
+
       await createNews.mutateAsync({
         title: title.trim(),
         category,
         country,
         flag: selectedCountry?.flag || "🌍",
-        image_url: imageUrl.trim() || "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=600&h=350&fit=crop",
+        image_url: finalImageUrl,
         summary: summary.trim() || null,
         created_by: user?.id || null,
       });
       toast({ title: "Noticia publicada", description: "La noticia se agregó correctamente." });
       setTitle("");
       setImageUrl("");
+      setImageFile(null);
+      setImagePreview(null);
       setSummary("");
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch {
       toast({ title: "Error", description: "No se pudo publicar la noticia.", variant: "destructive" });
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -143,9 +183,67 @@ const AdminNoticias = () => {
                   </select>
                 </div>
 
+                {/* Image mode toggle */}
                 <div className="space-y-2">
-                  <Label htmlFor="image">URL de imagen</Label>
-                  <Input id="image" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://..." />
+                  <Label>Imagen</Label>
+                  <div className="flex gap-1 rounded-lg border border-input p-1">
+                    <button
+                      type="button"
+                      onClick={() => setImageMode("upload")}
+                      className={`flex-1 flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                        imageMode === "upload"
+                          ? "bg-primary text-primary-foreground"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      <Upload className="h-3.5 w-3.5" /> Subir
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setImageMode("url")}
+                      className={`flex-1 flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                        imageMode === "url"
+                          ? "bg-primary text-primary-foreground"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      <Link2 className="h-3.5 w-3.5" /> URL
+                    </button>
+                  </div>
+
+                  {imageMode === "upload" ? (
+                    <div className="space-y-2">
+                      <div
+                        onClick={() => fileInputRef.current?.click()}
+                        className="border-2 border-dashed border-input rounded-lg p-4 text-center cursor-pointer hover:border-primary/50 transition-colors"
+                      >
+                        {imagePreview ? (
+                          <img src={imagePreview} alt="Preview" className="w-full h-32 object-cover rounded-md" />
+                        ) : (
+                          <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                            <Image className="h-8 w-8" />
+                            <span className="text-sm">Haz clic para seleccionar imagen</span>
+                          </div>
+                        )}
+                      </div>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                      {imageFile && (
+                        <p className="text-xs text-muted-foreground truncate">{imageFile.name}</p>
+                      )}
+                    </div>
+                  ) : (
+                    <Input
+                      value={imageUrl}
+                      onChange={(e) => setImageUrl(e.target.value)}
+                      placeholder="https://..."
+                    />
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -153,8 +251,8 @@ const AdminNoticias = () => {
                   <Textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Breve descripción..." rows={3} />
                 </div>
 
-                <Button type="submit" className="w-full" disabled={createNews.isPending}>
-                  {createNews.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+                <Button type="submit" className="w-full" disabled={createNews.isPending || uploading}>
+                  {(createNews.isPending || uploading) ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
                   Publicar Noticia
                 </Button>
               </form>
