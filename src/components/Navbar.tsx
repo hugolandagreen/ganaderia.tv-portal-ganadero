@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Noticias", href: "/#noticias" },
   { label: "Programación", href: "/#programacion" },
   { label: "Artículos", href: "/#articulos" },
-  { label: "Asistente IA", href: "/#ia" },
+  { label: "Asistente IA", href: "/asistente-ia" },
   { label: "Pro", href: "/#pro" },
 ];
 
