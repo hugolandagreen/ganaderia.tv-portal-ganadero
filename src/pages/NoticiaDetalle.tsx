@@ -71,8 +71,7 @@ const NoticiaDetalle = () => {
   };
 
   return (
-    <main className="min-h-screen bg-background">
-      <Navbar />
+    <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
 
       {/* Hero Image */}
       <section className="relative pt-20">

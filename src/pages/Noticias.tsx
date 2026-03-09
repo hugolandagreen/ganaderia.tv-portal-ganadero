@@ -28,8 +28,7 @@ const Noticias = () => {
   });
 
   return (
-    <main className="min-h-screen bg-background">
-      <Navbar />
+    <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
 
       {/* Hero header */}
       <section className="pt-28 pb-12 bg-gradient-to-b from-primary/10 via-secondary/20 to-background relative overflow-hidden">
