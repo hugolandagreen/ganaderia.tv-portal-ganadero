@@ -117,6 +117,11 @@ const AdminNoticias = () => {
     }
   };
 
+  useEffect(() => {
+    document.title = "Admin Noticias | Ganaderia.TV";
+    return () => { document.title = "Ganaderia.TV"; };
+  }, []);
+
   if (authLoading) return null;
 
   return (
