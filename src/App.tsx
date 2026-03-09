@@ -12,6 +12,7 @@ import Index from "./pages/Index";
 import Noticias from "./pages/Noticias";
 import NoticiaDetalle from "./pages/NoticiaDetalle";
 import AdminNoticias from "./pages/AdminNoticias";
+import AdminArticulos from "./pages/AdminArticulos";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import AsistenteIA from "./pages/AsistenteIA";
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="/asistente-ia" element={<AsistenteIA />} />
               <Route path="/admin/noticias" element={<AdminNoticias />} />
               <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+              <Route path="/admin/articulos" element={<AdminArticulos />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="*" element={<NotFound />} />
