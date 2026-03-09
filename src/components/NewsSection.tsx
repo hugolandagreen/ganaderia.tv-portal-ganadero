@@ -2,9 +2,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Milk, Beef, ArrowRight, Newspaper, Loader2, Target } from "lucide-react";
 import { Link } from "react-router-dom";
-import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
+import { countries, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
 import ReaderCount from "@/components/ReaderCount";
+import { useLang } from "@/contexts/LangContext";
 
 const categoryIcons: Record<Category, React.ReactNode> = {
   lechero: <Milk className="h-5 w-5" />,
