@@ -3,9 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, User, Clock, Share2, BookOpen } from "lucide-react";
+import { ArrowLeft, Calendar, User, Clock, BookOpen } from "lucide-react";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import ReaderCount from "@/components/ReaderCount";
+import SocialShare from "@/components/SocialShare";
 
 const ArticuloDetalle = () => {
   const { id } = useParams<{ id: string }>();
