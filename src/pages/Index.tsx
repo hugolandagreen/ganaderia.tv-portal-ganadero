@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Navbar from "@/components/Navbar";
 import HeroLive from "@/components/HeroLive";
-
 import NewsSection from "@/components/NewsSection";
 import ProgrammingSection from "@/components/ProgrammingSection";
 import ArticlesSection from "@/components/ArticlesSection";
 import Footer from "@/components/Footer";
-import RadioPlayer from "@/components/RadioPlayer";
 
 const Index = () => {
   const location = useLocation();
