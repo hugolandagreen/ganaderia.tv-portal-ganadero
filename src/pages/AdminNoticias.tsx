@@ -20,9 +20,9 @@ import DraggableNewsList from "@/components/admin/DraggableNewsList";
 import NewsEditDialog from "@/components/admin/NewsEditDialog";
 
 const categories = [
-  { value: "global", label: "Global" },
   { value: "lechero", label: "Ganado Lechero" },
   { value: "carne", label: "Ganado de Carne" },
+  { value: "doble_proposito", label: "Ganado Doble Propósito" },
 ];
 
 const ADMIN_EMAIL = "landaverde.pagos@gmail.com";
@@ -35,7 +35,7 @@ const AdminNoticias = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("global");
+  const [category, setCategory] = useState("lechero");
   const [country, setCountry] = useState("México");
   const [imageUrl, setImageUrl] = useState("");
   const [imageMode, setImageMode] = useState<"upload" | "url">("upload");

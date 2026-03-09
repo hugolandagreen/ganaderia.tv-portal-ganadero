@@ -57,7 +57,7 @@ const NoticiaDetalle = () => {
     );
   }
 
-  const badge = categoryBadge[news.category as Category] || categoryBadge.global;
+  const badge = categoryBadge[news.category as Category] || categoryBadge.lechero;
   const publishedDate = new Date(news.published_at);
   const readTime = Math.max(2, Math.ceil((news.content?.length || 0) / 1000));
 

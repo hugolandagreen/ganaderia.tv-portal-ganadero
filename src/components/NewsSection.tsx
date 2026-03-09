@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Milk, Beef, ArrowRight, Newspaper, Loader2 } from "lucide-react";
+import { Milk, Beef, ArrowRight, Newspaper, Loader2, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import { countries, categoryFilters, categoryBadge, type Category } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
 
 const categoryIcons: Record<Category, React.ReactNode> = {
-  global: <Globe className="h-5 w-5" />,
   lechero: <Milk className="h-5 w-5" />,
   carne: <Beef className="h-5 w-5" />,
+  doble_proposito: <Target className="h-5 w-5" />,
 };
 
 const NewsSection = () => {
@@ -18,7 +18,7 @@ const NewsSection = () => {
 
   const filtered = (newsData || [])
     .filter((n) => {
-      if (activeCategory && activeCategory !== "global" && n.category !== activeCategory) return false;
+      if (activeCategory && n.category !== activeCategory) return false;
       if (activeCountry && n.country !== activeCountry) return false;
       return true;
     })
@@ -117,7 +117,7 @@ const NewsSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
           <AnimatePresence mode="popLayout">
             {filtered.map((news, i) => {
-              const badge = categoryBadge[news.category as Category] || categoryBadge.global;
+              const badge = categoryBadge[news.category as Category] || categoryBadge.lechero;
               return (
                 <motion.article
                   key={news.id}
@@ -175,7 +175,7 @@ const NewsSection = () => {
             animate={{ opacity: 1 }}
             className="text-center py-16 text-muted-foreground"
           >
-            <Globe className="h-12 w-12 mx-auto mb-3 opacity-40" />
+            <Newspaper className="h-12 w-12 mx-auto mb-3 opacity-40" />
             <p className="text-lg font-semibold">No hay noticias para estos filtros</p>
             <p className="text-sm">Prueba con otra combinación de país o categoría</p>
           </motion.div>
