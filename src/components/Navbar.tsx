@@ -192,7 +192,7 @@ const Navbar = () => {
                   )}
                   {link.label === "GanaderIA_NAV" ? (
                     <span className="flex items-center gap-2">
-                      <img src={ganaderiaIcon} alt="" cla object-containssName="h-8 w-8" />
+                      <img src={ganaderiaIcon} alt="" className="h-8 w-8 object-contain" />
                       <span className="flex flex-col leading-none">
                         <span className="font-display font-extrabold text-primary normal-case">
                           Ganader<span className="text-accent">IA</span>
