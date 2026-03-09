@@ -382,6 +382,34 @@ const AsistenteIA = () => {
                   </p>
                 )}
               </div>
+
+              {/* Pro upsell in sidebar */}
+              {!isPro && (
+                <div className="mt-4 p-3 rounded-xl border border-primary/20 bg-primary/5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown className="h-4 w-4 text-primary" />
+                    <span className="text-xs font-bold text-primary">Plan Pro</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3">Consultas ilimitadas y asesoría personalizada</p>
+                  <button
+                    onClick={async () => {
+                      if (!user) { navigate("/auth"); return; }
+                      setProLoading(true);
+                      try {
+                        const { data, error } = await supabase.functions.invoke("create-checkout", { body: { priceId: PRO_PRICE_ID } });
+                        if (error) throw error;
+                        if (data?.url) window.open(data.url, "_blank");
+                      } catch (e: any) {
+                        toast({ title: "Error", description: e.message, variant: "destructive" });
+                      } finally { setProLoading(false); }
+                    }}
+                    disabled={proLoading}
+                    className="w-full text-xs py-2 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
+                  >
+                    {proLoading ? "Cargando..." : "$9.99/mes"}
+                  </button>
+                </div>
+              )}
             </div>
           </aside>
         )}
