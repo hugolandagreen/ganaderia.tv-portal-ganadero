@@ -27,7 +27,9 @@ export const useCreateNews = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (news: TablesInsert<"news">) => {
-      const { data, error } = await supabase.from("news").insert(news).select().single();
+      // display_order is auto-set to 0 by DB trigger; existing news shifts down automatically
+      const { display_order, ...rest } = news as any;
+      const { data, error } = await supabase.from("news").insert(rest).select().single();
       if (error) throw error;
       return data;
     },
