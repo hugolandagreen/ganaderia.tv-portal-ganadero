@@ -165,7 +165,7 @@ const HeroLive = () => {
 
   return (
     <>
-      <section id="en-vivo" className="pt-14 sm:pt-16 lg:pt-20" ref={sectionRef}>
+      <section id="en-vivo" className="pt-0" ref={sectionRef}>
         <div className="relative bg-foreground" ref={containerRef}>
           {/* Top bar with live indicator */}
           <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-3 sm:px-4 md:px-8 py-2 sm:py-3 bg-gradient-to-b from-black/60 to-transparent">
