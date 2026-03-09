@@ -70,6 +70,10 @@ serve(async (req) => {
     if (action === "add_role") {
       const { userId, role } = params;
       if (!userId || !role) throw new Error("userId and role required");
+      // Only super_admin can assign super_admin role
+      if (role === "super_admin" && !isSuperAdmin) {
+        throw new Error("Solo un super administrador puede asignar este rol");
+      }
       const { error } = await supabase
         .from("user_roles")
         .insert({ user_id: userId, role });
