@@ -113,6 +113,11 @@ const Noticias = () => {
             })}
           </div>
 
+          {/* Top ad banner */}
+          <div className="mb-8">
+            <AdBanner placement="news_top" variant="banner" />
+          </div>
+
           {/* Results count */}
           <p className="text-sm text-muted-foreground mb-6">
             {t("news_showing")} <span className="font-bold text-foreground">{filtered.length}</span> {t("news_count_label")}
