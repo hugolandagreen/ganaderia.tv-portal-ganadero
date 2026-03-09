@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Menu, X, Radio, Volume2, VolumeX, Play, Square, User, LogOut, Crown } from "lucide-react";
+import { Menu, X, Radio, Volume2, VolumeX, Play, Square, User, LogOut, Crown, Bot } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate, useLocation } from "react-router-dom";
