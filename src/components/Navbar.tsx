@@ -180,7 +180,7 @@ const Navbar = () => {
                     <span className="h-2 w-2 rounded-full bg-destructive animate-pulse-live" />
                   )}
                   {link.label}
-                  {link.label === "Pro" && <Crown className="h-4 w-4 text-primary" />}
+                  {link.label === "Asistente IA" && <Bot className="h-4 w-4 text-primary" />}
                 </a>
               ))}
               {/* Mobile auth */}
