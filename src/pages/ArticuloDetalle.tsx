@@ -7,9 +7,11 @@ import { ArrowLeft, Calendar, User, Clock, BookOpen } from "lucide-react";
 import Footer from "@/components/Footer";
 import ReaderCount from "@/components/ReaderCount";
 import SocialShare from "@/components/SocialShare";
+import { useLang } from "@/contexts/LangContext";
 
 const ArticuloDetalle = () => {
   const { id } = useParams<{ id: string }>();
+  const { lang, t } = useLang();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,7 +35,7 @@ const ArticuloDetalle = () => {
     return (
       <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
         <div className="pt-28 pb-20 flex items-center justify-center">
-          <div className="animate-pulse text-muted-foreground">Cargando...</div>
+          <div className="animate-pulse text-muted-foreground">{t("common_loading")}</div>
         </div>
         <Footer />
       </main>
@@ -44,9 +46,9 @@ const ArticuloDetalle = () => {
     return (
       <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
         <div className="pt-28 pb-20 text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Artículo no encontrado</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">{t("detail_not_found_article")}</h1>
           <Link to="/articulos" className="text-primary hover:underline">
-            Volver al blog
+            {t("detail_back_blog")}
           </Link>
         </div>
         <Footer />
@@ -91,7 +93,7 @@ const ArticuloDetalle = () => {
               className="inline-flex items-center gap-2 text-primary font-semibold mb-6 hover:gap-3 transition-all bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full"
             >
               <ArrowLeft className="h-4 w-4" />
-              Volver al blog
+              {t("detail_back_blog")}
             </Link>
 
             <div className="bg-card rounded-3xl shadow-xl p-6 md:p-10 border border-border/50">
@@ -114,13 +116,13 @@ const ArticuloDetalle = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">{article.author}</p>
-                    <p className="text-xs">Autor</p>
+                    <p className="text-xs">{t("detail_author")}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   <span>
-                    {publishedDate.toLocaleDateString("es-MX", {
+                    {publishedDate.toLocaleDateString(lang === "pt" ? "pt-BR" : "es-MX", {
                       day: "numeric",
                       month: "long",
                       year: "numeric",
@@ -129,14 +131,14 @@ const ArticuloDetalle = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  <span>{readTime} min de lectura</span>
+                  <span>{readTime} {t("articles_min_read")}</span>
                 </div>
                 <ReaderCount id={article.id} publishedAt={article.published_at} size="md" />
               </div>
 
               {/* Social share */}
               <div className="flex items-center gap-3 mb-8 pb-8 border-b border-border">
-                <span className="text-sm font-semibold text-foreground">Compartir:</span>
+                <span className="text-sm font-semibold text-foreground">{t("detail_share")}</span>
                 <SocialShare title={article.title} text={article.description || ""} size="md" />
               </div>
 
@@ -155,7 +157,7 @@ const ArticuloDetalle = () => {
                 />
               ) : (
                 <p className="text-muted-foreground italic">
-                  El contenido completo de este artículo aún no está disponible.
+                  {t("detail_no_content")}
                 </p>
               )}
             </div>

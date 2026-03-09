@@ -3,14 +3,22 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, User, Clock, Eye } from "lucide-react";
+import { ArrowLeft, Calendar, User, Clock } from "lucide-react";
 import Footer from "@/components/Footer";
 import { categoryBadge, type Category } from "@/data/news";
 import ReaderCount from "@/components/ReaderCount";
 import SocialShare from "@/components/SocialShare";
+import { useLang } from "@/contexts/LangContext";
+
+const categoryLabels: Record<Category, { es: string; pt: string }> = {
+  lechero: { es: "Ganado Lechero", pt: "Gado Leiteiro" },
+  carne: { es: "Ganado de Carne", pt: "Gado de Corte" },
+  doble_proposito: { es: "Ganado Doble Propósito", pt: "Gado Dupla Aptidão" },
+};
 
 const NoticiaDetalle = () => {
   const { id } = useParams<{ id: string }>();
+  const { lang, t } = useLang();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,7 +42,7 @@ const NoticiaDetalle = () => {
     return (
       <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
         <div className="pt-28 pb-20 flex items-center justify-center">
-          <div className="animate-pulse text-muted-foreground">Cargando...</div>
+          <div className="animate-pulse text-muted-foreground">{t("common_loading")}</div>
         </div>
         <Footer />
       </main>
@@ -45,9 +53,9 @@ const NoticiaDetalle = () => {
     return (
       <main className="min-h-screen bg-background pt-14 sm:pt-16 lg:pt-20">
         <div className="pt-28 pb-20 text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Noticia no encontrada</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">{t("detail_not_found_news")}</h1>
           <Link to="/noticias" className="text-primary hover:underline">
-            Volver a noticias
+            {t("detail_back_news")}
           </Link>
         </div>
         <Footer />
@@ -56,6 +64,7 @@ const NoticiaDetalle = () => {
   }
 
   const badge = categoryBadge[news.category as Category] || categoryBadge.lechero;
+  const badgeLabel = categoryLabels[news.category as Category]?.[lang] || badge.label;
   const publishedDate = new Date(news.published_at);
   const readTime = Math.max(2, Math.ceil((news.content?.length || 0) / 1000));
 
@@ -89,7 +98,7 @@ const NoticiaDetalle = () => {
               className="inline-flex items-center gap-2 text-primary font-semibold mb-6 hover:gap-3 transition-all bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full"
             >
               <ArrowLeft className="h-4 w-4" />
-              Volver a noticias
+              {t("detail_back_news")}
             </Link>
 
             {/* Article card */}
@@ -97,7 +106,7 @@ const NoticiaDetalle = () => {
               {/* Meta info */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 <span className={`px-4 py-1.5 rounded-full text-sm font-bold ${badge.classes}`}>
-                  {badge.label}
+                  {badgeLabel}
                 </span>
                 <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
                   <span className="text-xl">{news.flag}</span>
@@ -118,13 +127,13 @@ const NoticiaDetalle = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">{news.author}</p>
-                    <p className="text-xs">Autor</p>
+                    <p className="text-xs">{t("detail_author")}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   <span>
-                    {publishedDate.toLocaleDateString("es-MX", {
+                    {publishedDate.toLocaleDateString(lang === "pt" ? "pt-BR" : "es-MX", {
                       day: "numeric",
                       month: "long",
                       year: "numeric",
@@ -133,14 +142,14 @@ const NoticiaDetalle = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  <span>{readTime} min de lectura</span>
+                  <span>{readTime} {t("articles_min_read")}</span>
                 </div>
                 <ReaderCount id={news.id} publishedAt={news.published_at} size="md" />
               </div>
 
               {/* Social share */}
               <div className="flex items-center gap-3 mb-8 pb-8 border-b border-border">
-                <span className="text-sm font-semibold text-foreground">Compartir:</span>
+                <span className="text-sm font-semibold text-foreground">{t("detail_share")}</span>
                 <SocialShare title={news.title} text={news.summary || ""} size="md" />
               </div>
 
@@ -159,7 +168,7 @@ const NoticiaDetalle = () => {
                 />
               ) : (
                 <p className="text-muted-foreground italic">
-                  El contenido completo de esta noticia aún no está disponible.
+                  {t("detail_no_content")}
                 </p>
               )}
             </div>

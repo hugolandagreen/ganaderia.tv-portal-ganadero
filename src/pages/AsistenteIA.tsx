@@ -1,12 +1,13 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bot, Send, Loader2, Crown, Lock, Plus, MessageSquare, Trash2, Sparkles, TrendingUp, Dna, Stethoscope, DollarSign, Wheat, Check, Brain, Zap, Shield, Leaf } from "lucide-react";
+import { Bot, Send, Loader2, Crown, Lock, Plus, MessageSquare, Trash2, TrendingUp, Dna, Stethoscope, DollarSign, Wheat, Check, Brain, Zap, Shield, Leaf } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { PRO_PRICE_ID } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import ganaderiaIcon from "@/assets/ganaderia-icon.png";
+import { useLang } from "@/contexts/LangContext";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -19,68 +20,6 @@ type Conversation = {
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-ganadero`;
 const FREE_DAILY_LIMIT = 5;
-
-const suggestionCategories = [
-  {
-    icon: TrendingUp,
-    title: "Precios y Mercados",
-    color: "text-green-500",
-    questions: [
-      "¿Cuál es el precio actual del novillo en pie en México?",
-      "¿Cómo está el mercado de exportación de carne en Brasil?",
-      "Tendencias del precio del becerro en Colombia",
-    ],
-  },
-  {
-    icon: Dna,
-    title: "Genética y Razas",
-    color: "text-blue-500",
-    questions: [
-      "¿Cuál es el mejor cruce para doble propósito en clima tropical?",
-      "Características de la raza Brahman vs Nelore",
-      "¿Cómo mejorar la genética de mi hato lechero?",
-    ],
-  },
-  {
-    icon: Stethoscope,
-    title: "Salud Animal",
-    color: "text-red-500",
-    questions: [
-      "Protocolo de vacunación para ganado bovino en México",
-      "¿Cómo prevenir la fiebre aftosa en mi rancho?",
-      "Signos de mastitis y tratamiento recomendado",
-    ],
-  },
-  {
-    icon: Wheat,
-    title: "Nutrición y Pasturas",
-    color: "text-amber-500",
-    questions: [
-      "¿Qué pastos son mejores para engorda en zona tropical?",
-      "Plan nutricional para vacas en producción lechera",
-      "¿Cómo suplementar ganado en época de sequía?",
-    ],
-  },
-  {
-    icon: DollarSign,
-    title: "Rentabilidad",
-    color: "text-emerald-500",
-    questions: [
-      "¿Cómo calcular el costo de producción por litro de leche?",
-      "Análisis de rentabilidad de engorda en corral",
-      "¿Cuántas cabezas necesito para que mi rancho sea rentable?",
-    ],
-  },
-];
-
-const proFeatures = [
-  { icon: Brain, text: "Asesoría personalizada según tu ganado y región" },
-  { icon: TrendingUp, text: "Análisis de mercados y precios en tiempo real" },
-  { icon: Leaf, text: "Planes de nutrición y manejo de pasturas" },
-  { icon: Shield, text: "Protocolos sanitarios y prevención" },
-  { icon: Zap, text: "Consultas ilimitadas sin restricciones" },
-  { icon: DollarSign, text: "Gestión financiera y costos de producción" },
-];
 
 async function streamChat({
   messages,
@@ -163,9 +102,10 @@ async function streamChat({
 }
 
 const AsistenteIA = () => {
-  const { user, isPro, subscription } = useAuth();
+  const { user, isPro } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t, tArray } = useLang();
   const [proLoading, setProLoading] = useState(false);
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -173,7 +113,7 @@ const AsistenteIA = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar] = useState(true);
   const [freeCount, setFreeCount] = useState(() => {
     const stored = localStorage.getItem("ganadero_free_count");
     const storedDate = localStorage.getItem("ganadero_free_date");
@@ -184,6 +124,16 @@ const AsistenteIA = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const hasScrolled = useRef(false);
+
+  const suggestionCategories = [
+    { icon: TrendingUp, titleKey: "ai_cat_prices" as const, color: "text-green-500", questionsKey: "ai_q_prices" as const },
+    { icon: Dna, titleKey: "ai_cat_genetics" as const, color: "text-blue-500", questionsKey: "ai_q_genetics" as const },
+    { icon: Stethoscope, titleKey: "ai_cat_health" as const, color: "text-red-500", questionsKey: "ai_q_health" as const },
+    { icon: Wheat, titleKey: "ai_cat_nutrition" as const, color: "text-amber-500", questionsKey: "ai_q_nutrition" as const },
+    { icon: DollarSign, titleKey: "ai_cat_profitability" as const, color: "text-emerald-500", questionsKey: "ai_q_profitability" as const },
+  ];
+
+  const proFeatures = tArray("ai_pro_features");
 
   useEffect(() => {
     document.title = "GanaderIA – Asistente Ganadero con IA | Ganaderia.TV";
@@ -248,8 +198,8 @@ const AsistenteIA = () => {
 
     if (isLimited) {
       toast({
-        title: "Límite alcanzado",
-        description: "Has usado tus 5 consultas gratuitas de hoy. ¡Suscríbete a Pro para consultas ilimitadas!",
+        title: t("ai_limit_reached"),
+        description: t("ai_limit_desc"),
         variant: "destructive",
       });
       return;
@@ -322,13 +272,13 @@ const AsistenteIA = () => {
           }
         },
         onError: (errMsg) => {
-          toast({ title: "Error", description: errMsg, variant: "destructive" });
+          toast({ title: t("common_error"), description: errMsg, variant: "destructive" });
           setIsLoading(false);
         },
       });
     } catch (e) {
       console.error(e);
-      toast({ title: "Error", description: "No se pudo conectar con el asistente.", variant: "destructive" });
+      toast({ title: t("common_error"), description: "No se pudo conectar con el asistente.", variant: "destructive" });
       setIsLoading(false);
     }
   };
@@ -347,7 +297,7 @@ const AsistenteIA = () => {
                 className="w-full flex items-center gap-2 px-4 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors mb-4"
               >
                 <Plus className="h-4 w-4" />
-                Nueva conversación
+                {t("ai_new_conversation")}
               </button>
 
               <div className="flex-1 overflow-y-auto space-y-1">
@@ -376,7 +326,7 @@ const AsistenteIA = () => {
                 ))}
                 {conversations.length === 0 && (
                   <p className="text-sm text-muted-foreground text-center py-8">
-                    Tus conversaciones aparecerán aquí
+                    {t("ai_conversations_empty")}
                   </p>
                 )}
               </div>
@@ -386,9 +336,9 @@ const AsistenteIA = () => {
                 <div className="mt-4 p-3 rounded-xl border border-primary/20 bg-primary/5">
                   <div className="flex items-center gap-2 mb-2">
                     <Crown className="h-4 w-4 text-primary" />
-                    <span className="text-xs font-bold text-primary">Plan Pro</span>
+                    <span className="text-xs font-bold text-primary">{t("ai_pro_plan")}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground mb-3">Consultas ilimitadas y asesoría personalizada</p>
+                  <p className="text-xs text-muted-foreground mb-3">{t("ai_pro_desc")}</p>
                   <button
                     onClick={async () => {
                       if (!user) { navigate("/auth"); return; }
@@ -398,13 +348,13 @@ const AsistenteIA = () => {
                         if (error) throw error;
                         if (data?.url) window.open(data.url, "_blank");
                       } catch (e: any) {
-                        toast({ title: "Error", description: e.message, variant: "destructive" });
+                        toast({ title: t("common_error"), description: e.message, variant: "destructive" });
                       } finally { setProLoading(false); }
                     }}
                     disabled={proLoading}
                     className="w-full text-xs py-2 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
                   >
-                    {proLoading ? "Cargando..." : "$9.99/mes"}
+                    {proLoading ? t("common_loading") : "$9.99/mes"}
                   </button>
                 </div>
               )}
@@ -416,14 +366,14 @@ const AsistenteIA = () => {
         <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
           <div className="border-b border-border bg-card px-4 py-3 flex items-center gap-3">
-            <img src={ganaderiaIcon} alt="GanaderIA" className="h-8 w-8 object-contain object-contain object-contain" />
+            <img src={ganaderiaIcon} alt="GanaderIA" className="h-8 w-8 object-contain" />
             <div className="flex-1">
               <h1 className="text-lg font-display font-extrabold text-foreground leading-none">Ganader<span className="text-primary">IA</span></h1>
-              <p className="text-[10px] text-muted-foreground font-medium tracking-wider uppercase">Asistente Ganadero con IA</p>
+              <p className="text-[10px] text-muted-foreground font-medium tracking-wider uppercase">{t("ai_assistant_label")}</p>
               <p className="text-xs text-muted-foreground">
                 {isPro
-                  ? "Consultas ilimitadas • Asesoría personalizada"
-                  : `${FREE_DAILY_LIMIT - freeCount} consultas gratuitas restantes hoy`}
+                  ? t("ai_unlimited")
+                  : `${FREE_DAILY_LIMIT - freeCount} ${t("ai_free_remaining")}`}
               </p>
             </div>
             {isPro && (
@@ -436,7 +386,7 @@ const AsistenteIA = () => {
                 onClick={() => navigate("/auth")}
                 className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
               >
-                Iniciar sesión para guardar chats
+                {t("auth_login_save")}
               </button>
             )}
           </div>
@@ -450,19 +400,19 @@ const AsistenteIA = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mb-8"
                 >
-                  <img src={ganaderiaIcon} alt="GanaderIA" className="w-16 h-16 mb-4 object-contain" />
+                  <img src={ganaderiaIcon} alt="GanaderIA" className="w-16 h-16 mx-auto mb-4 object-contain" />
                    <h2 className="text-2xl font-display font-extrabold text-foreground mb-2">
-                    Bienvenido a Ganader<span className="text-primary">IA</span>
+                    {t("ai_welcome")}<span className="text-primary">IA</span>
                   </h2>
                   <p className="text-muted-foreground max-w-md mx-auto">
-                    Tu asistente ganadero con inteligencia artificial. Pregúntame sobre precios, razas, nutrición, salud animal y más.
+                    {t("ai_welcome_desc")}
                   </p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {suggestionCategories.map((cat, idx) => (
                     <motion.div
-                      key={cat.title}
+                      key={cat.titleKey}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.1 }}
@@ -470,10 +420,10 @@ const AsistenteIA = () => {
                     >
                       <div className="flex items-center gap-2 mb-3">
                         <cat.icon className={`h-5 w-5 ${cat.color}`} />
-                        <h3 className="font-semibold text-foreground text-sm">{cat.title}</h3>
+                        <h3 className="font-semibold text-foreground text-sm">{t(cat.titleKey)}</h3>
                       </div>
                       <div className="space-y-2">
-                        {cat.questions.map((q) => (
+                        {tArray(cat.questionsKey).map((q) => (
                           <button
                             key={q}
                             onClick={() => handleSend(q)}
@@ -500,17 +450,17 @@ const AsistenteIA = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <Crown className="h-5 w-5 text-primary" />
-                          <h3 className="font-bold text-foreground">GanaderIA Pro</h3>
+                          <h3 className="font-bold text-foreground">{t("ai_pro_title")}</h3>
                           <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-bold">$9.99/mes</span>
                         </div>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Desbloquea todo el poder de GanaderIA para llevar tu ganadería al siguiente nivel
+                          {t("ai_pro_unlock")}
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                           {proFeatures.slice(0, 4).map((f, i) => (
                             <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
                               <Check className="h-3 w-3 text-primary flex-shrink-0" />
-                              {f.text}
+                              {f}
                             </div>
                           ))}
                         </div>
@@ -524,13 +474,13 @@ const AsistenteIA = () => {
                             if (error) throw error;
                             if (data?.url) window.open(data.url, "_blank");
                           } catch (e: any) {
-                            toast({ title: "Error", description: e.message, variant: "destructive" });
+                            toast({ title: t("common_error"), description: e.message, variant: "destructive" });
                           } finally { setProLoading(false); }
                         }}
                         disabled={proLoading}
                         className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors disabled:opacity-50 shadow-md whitespace-nowrap"
                       >
-                        {proLoading ? "Cargando..." : user ? "Suscribirme" : "Acceder para suscribirte"}
+                        {proLoading ? t("common_loading") : user ? t("ai_subscribe") : t("ai_access_subscribe")}
                       </button>
                     </div>
                   </motion.div>
@@ -546,7 +496,7 @@ const AsistenteIA = () => {
                         : "bg-muted text-foreground"
                     }`}>
                       {msg.role === "assistant" && (
-                        <img src={ganaderiaIcon} alt="object-contain GanaderIA" className="h-4 w-4 mb-1 inline-block mr-1.5" />
+                        <img src={ganaderiaIcon} alt="GanaderIA" className="h-4 w-4 mb-1 inline-block mr-1.5 object-contain" />
                       )}
                       {msg.content}
                     </div>
@@ -569,12 +519,12 @@ const AsistenteIA = () => {
             <div className="mx-4 mb-2 p-3 rounded-lg bg-primary/10 border border-primary/20 flex items-center gap-3">
               <Lock className="h-5 w-5 text-primary flex-shrink-0" />
               <div className="flex-1 text-sm text-foreground">
-                Has alcanzado tu límite diario.{" "}
+                {t("ai_limit_banner")}{" "}
                 <button
                   onClick={() => navigate("/#pro")}
                   className="text-primary font-bold hover:underline"
                 >
-                  ¡Hazte Pro para consultas ilimitadas!
+                  {t("ai_go_pro")}
                 </button>
               </div>
             </div>
@@ -587,7 +537,7 @@ const AsistenteIA = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder={isLimited ? "Suscríbete a Pro para continuar..." : "Pregunta sobre precios, razas, mercados..."}
+                placeholder={isLimited ? t("ai_placeholder_limited") : t("ai_placeholder")}
                 disabled={isLoading || isLimited}
                 className="flex-1 bg-background rounded-xl px-4 py-3 text-base text-foreground placeholder:text-muted-foreground border-2 border-border focus:outline-none focus:border-primary disabled:opacity-50"
               />

@@ -7,8 +7,10 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, Lock, ArrowLeft } from "lucide-react";
 import ganaderiaIcon from "@/assets/ganaderia-icon.png";
+import { useLang } from "@/contexts/LangContext";
 
 const Auth = () => {
+  const { t } = useLang();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +29,7 @@ const Auth = () => {
           redirectTo: `${window.location.origin}/reset-password`,
         });
         if (error) throw error;
-        toast({ title: "Revisa tu email", description: "Te enviamos un enlace para restablecer tu contraseña." });
+        toast({ title: t("auth_check_email"), description: t("auth_check_email_desc") });
         setIsForgotPassword(false);
       } else if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -40,10 +42,10 @@ const Auth = () => {
           options: { emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
-        toast({ title: "¡Registro exitoso!", description: "Revisa tu email para confirmar tu cuenta." });
+        toast({ title: t("auth_success"), description: t("auth_success_desc") });
       }
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      toast({ title: t("common_error"), description: error.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -54,7 +56,7 @@ const Auth = () => {
       redirect_uri: window.location.origin,
     });
     if (error) {
-      toast({ title: "Error", description: "No se pudo iniciar sesión con Google", variant: "destructive" });
+      toast({ title: t("common_error"), description: "No se pudo iniciar sesión con Google", variant: "destructive" });
     }
   };
 
@@ -68,16 +70,16 @@ const Auth = () => {
               <span className="font-display font-extrabold text-primary tracking-tight text-2xl">
                 Ganader<span className="text-accent">IA</span>
               </span>
-              <span className="text-[10px] text-muted-foreground font-semibold tracking-wider uppercase">Asistente IA</span>
+              <span className="text-[10px] text-muted-foreground font-semibold tracking-wider uppercase">{t("ai_assistant_label")}</span>
             </span>
           </div>
           <h1 className="text-xl font-bold text-foreground">
-            {isForgotPassword ? "Restablecer contraseña" : isLogin ? "Iniciar Sesión" : "Crear Cuenta"}
+            {isForgotPassword ? t("auth_reset_password") : isLogin ? t("auth_login") : t("auth_signup")}
           </h1>
           <p className="text-muted-foreground mt-1">
             {isForgotPassword
-              ? "Ingresa tu email para recibir un enlace"
-              : "Accede al Asistente Ganadero Pro"}
+              ? t("auth_reset_desc")
+              : t("auth_access_desc")}
           </p>
         </div>
 
@@ -94,14 +96,14 @@ const Auth = () => {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              Continuar con Google
+              {t("auth_google")}
             </Button>
           )}
 
           {!isForgotPassword && (
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-border" />
-              <span className="text-sm text-muted-foreground">o</span>
+              <span className="text-sm text-muted-foreground">{t("auth_or")}</span>
               <div className="flex-1 h-px bg-border" />
             </div>
           )}
@@ -111,7 +113,7 @@ const Auth = () => {
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="email"
-                placeholder="Email"
+                placeholder={t("auth_email")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="pl-10 h-12"
@@ -123,7 +125,7 @@ const Auth = () => {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="password"
-                  placeholder="Contraseña"
+                  placeholder={t("auth_password")}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10 h-12"
@@ -134,12 +136,12 @@ const Auth = () => {
             )}
             <Button type="submit" className="w-full h-12 text-base" disabled={loading}>
               {loading
-                ? "Cargando..."
+                ? t("auth_loading")
                 : isForgotPassword
-                ? "Enviar enlace"
+                ? t("auth_send_link")
                 : isLogin
-                ? "Iniciar Sesión"
-                : "Crear Cuenta"}
+                ? t("auth_login")
+                : t("auth_signup")}
             </Button>
           </form>
 
@@ -149,7 +151,7 @@ const Auth = () => {
                 onClick={() => setIsForgotPassword(true)}
                 className="text-sm text-primary hover:underline"
               >
-                ¿Olvidaste tu contraseña?
+                {t("auth_forgot")}
               </button>
             )}
             {isForgotPassword ? (
@@ -157,16 +159,16 @@ const Auth = () => {
                 onClick={() => setIsForgotPassword(false)}
                 className="text-sm text-primary hover:underline flex items-center gap-1 mx-auto"
               >
-                <ArrowLeft className="h-3 w-3" /> Volver al login
+                <ArrowLeft className="h-3 w-3" /> {t("auth_back_login")}
               </button>
             ) : (
               <p className="text-sm text-muted-foreground">
-                {isLogin ? "¿No tienes cuenta? " : "¿Ya tienes cuenta? "}
+                {isLogin ? t("auth_no_account") : t("auth_has_account")}
                 <button
                   onClick={() => setIsLogin(!isLogin)}
                   className="text-primary hover:underline font-medium"
                 >
-                  {isLogin ? "Regístrate" : "Inicia sesión"}
+                  {isLogin ? t("auth_register") : t("auth_signin")}
                 </button>
               </p>
             )}
@@ -177,7 +179,7 @@ const Auth = () => {
           onClick={() => navigate("/")}
           className="mt-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 mx-auto"
         >
-          <ArrowLeft className="h-3 w-3" /> Volver al inicio
+          <ArrowLeft className="h-3 w-3" /> {t("auth_back_home")}
         </button>
       </div>
     </div>
