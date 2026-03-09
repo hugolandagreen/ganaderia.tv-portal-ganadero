@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/logo-ganaderia-tv.png";
+import ganaderiaIcon from "@/assets/ganaderia-icon.png";
 
 const navLinks = [
   { label: "EN VIVO", href: "/#en-vivo" },
