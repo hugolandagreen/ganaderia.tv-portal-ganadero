@@ -151,7 +151,7 @@ const HeroLive = () => {
           onClick={togglePlay}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="w-full aspect-video sm:aspect-[21/9] max-h-[50vh] sm:max-h-[60vh] md:max-h-[72vh] bg-black flex items-center justify-center relative group cursor-pointer overflow-hidden"
+          className="w-full aspect-video sm:aspect-[21/9] max-h-[45vh] sm:max-h-[54vh] md:max-h-[65vh] bg-black flex items-center justify-center relative group cursor-pointer overflow-hidden"
         >
           {/* Video container - video element lives here when not in PiP */}
           <div
