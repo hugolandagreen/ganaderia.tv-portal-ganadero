@@ -151,17 +151,23 @@ const HeroLive = () => {
           onClick={togglePlay}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="w-full aspect-video sm:aspect-[21/9] max-h-[45vh] sm:max-h-[54vh] md:max-h-[65vh] bg-black flex items-center justify-center relative group cursor-pointer overflow-hidden"
+          className={`w-full bg-black flex items-center justify-center relative group cursor-pointer overflow-hidden ${
+            isFullscreen 
+              ? 'h-full' 
+              : 'aspect-video sm:aspect-[21/9] max-h-[45vh] sm:max-h-[54vh] md:max-h-[65vh]'
+          }`}
         >
           {/* Video container - video element lives here when not in PiP */}
           <div
             ref={mainVideoContainerRef}
             className="absolute inset-0 w-full h-full"
           />
-          {/* Vignette overlay for letterbox areas */}
-          <div className="absolute inset-0 pointer-events-none z-[1]" style={{
-            boxShadow: 'inset 60px 0 40px -20px rgba(0,0,0,0.7), inset -60px 0 40px -20px rgba(0,0,0,0.7)'
-          }} />
+          {/* Vignette gradient overlay - smooth fade from black sides into video */}
+          <div className="absolute inset-0 pointer-events-none z-[1]"
+            style={{
+              background: 'linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 8%, transparent 18%, transparent 82%, rgba(0,0,0,0.4) 92%, rgba(0,0,0,0.85) 100%)'
+            }}
+          />
 
           {/* Black overlay when video is in PiP */}
           {pipActive && started && (
