@@ -85,7 +85,7 @@ const HeroLive = () => {
   useEffect(() => {
     if (!videoRef.current) {
       const video = document.createElement("video");
-      video.className = "w-full h-full object-cover";
+      video.className = "w-full h-full object-contain";
       video.playsInline = true;
       video.muted = isMuted;
       (videoRef as React.MutableRefObject<HTMLVideoElement>).current = video;
