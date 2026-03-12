@@ -55,7 +55,7 @@ Deno.serve(async (req) => {
     // For .m3u8 playlists, rewrite internal URLs to go through proxy
     if (path.endsWith('.m3u8') || contentType.includes('mpegurl')) {
       const text = new TextDecoder().decode(body);
-      const proxyBase = `${url.origin}${url.pathname}`;
+      const proxyBase = `https://${url.host}${url.pathname}`;
       
       // Rewrite all non-comment lines (segment and sub-playlist URLs)
       const rewritten = text.replace(/^(?!#)(\S+)$/gm, (match) => {
