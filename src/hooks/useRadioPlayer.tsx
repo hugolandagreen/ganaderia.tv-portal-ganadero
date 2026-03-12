@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useRef, useCallback, useEffect, Re
 import Hls from "hls.js";
 
 const RADIO_STREAM_URL = "https://vtune.stream/listen/la_pegajosa.net/radio.mp3";
-const TV_STREAM_URL = "http://tv.vtune.stream:8409/iptv/channel/1.m3u8?mode=segmenter";
+const TV_STREAM_URL = "https://tv.vtune.stream:8409/iptv/channel/1.m3u8?mode=segmenter";
 
 type ActiveMedia = "none" | "radio" | "tv";
 
