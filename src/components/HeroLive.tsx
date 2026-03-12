@@ -85,7 +85,7 @@ const HeroLive = () => {
   useEffect(() => {
     if (!videoRef.current) {
       const video = document.createElement("video");
-      video.className = "w-full h-full object-cover";
+      video.className = "w-full h-full object-contain";
       video.playsInline = true;
       video.muted = isMuted;
       (videoRef as React.MutableRefObject<HTMLVideoElement>).current = video;
@@ -158,6 +158,10 @@ const HeroLive = () => {
             ref={mainVideoContainerRef}
             className="absolute inset-0 w-full h-full"
           />
+          {/* Vignette overlay for letterbox areas */}
+          <div className="absolute inset-0 pointer-events-none z-[1]" style={{
+            boxShadow: 'inset 60px 0 40px -20px rgba(0,0,0,0.7), inset -60px 0 40px -20px rgba(0,0,0,0.7)'
+          }} />
 
           {/* Black overlay when video is in PiP */}
           {pipActive && started && (
