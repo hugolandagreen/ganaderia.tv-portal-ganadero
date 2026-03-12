@@ -57,14 +57,25 @@ Deno.serve(async (req) => {
       const text = new TextDecoder().decode(body);
       const proxyBase = `${url.origin}${url.pathname}`;
       
-      // Rewrite relative .ts segment URLs and .m3u8 sub-playlist URLs
-      const rewritten = text.replace(/^(?!#)(.+\.ts.*)$/gm, (match) => {
-        // Handle both absolute and relative URLs
-        const segmentPath = match.startsWith('/') ? match : `/iptv/channel/${match}`;
+      // Rewrite all non-comment lines (segment and sub-playlist URLs)
+      const rewritten = text.replace(/^(?!#)(\S+)$/gm, (match) => {
+        let segmentPath: string;
+        if (match.startsWith('http://') || match.startsWith('https://')) {
+          // Absolute URL - extract path from it
+          try {
+            const parsed = new URL(match);
+            segmentPath = parsed.pathname + parsed.search;
+          } catch {
+            segmentPath = match;
+          }
+        } else if (match.startsWith('/')) {
+          segmentPath = match;
+        } else {
+          // Relative path - resolve against current directory
+          const dir = path.substring(0, path.lastIndexOf('/') + 1);
+          segmentPath = dir + match;
+        }
         return `${proxyBase}?path=${encodeURIComponent(segmentPath)}`;
-      }).replace(/^(?!#)(.+\.m3u8.*)$/gm, (match) => {
-        const subPath = match.startsWith('/') ? match : `/iptv/channel/${match}`;
-        return `${proxyBase}?path=${encodeURIComponent(subPath)}`;
       });
 
       return new Response(rewritten, {
